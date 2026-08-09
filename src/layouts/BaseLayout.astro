@@ -1,0 +1,47 @@
+---
+import '../styles/global.css';
+import SEOHead from '../components/seo/SEOHead.astro';
+import Schema from '../components/seo/Schema.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import MobileStickyBar from '../components/layout/MobileStickyBar.astro';
+import { organizationSchema, localBusinessSchema, websiteSchema, breadcrumbSchema } from '../lib/schema';
+
+interface Props {
+  title?: string;
+  description: string;
+  pathname: string;
+  ogImage?: string;
+  noindex?: boolean;
+  schemas?: object[];
+  breadcrumbs?: { name: string; href: string }[];
+}
+
+const { title, description, pathname, ogImage, noindex, schemas = [], breadcrumbs } = Astro.props;
+
+const allSchemas = [
+  organizationSchema(),
+  localBusinessSchema(),
+  websiteSchema(),
+  ...(breadcrumbs ? [breadcrumbSchema(breadcrumbs)] : []),
+  ...schemas,
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <SEOHead {title} {description} {pathname} {ogImage} {noindex} />
+    <Schema items={allSchemas} />
+  </head>
+  <body class="bg-white text-slate-700 antialiased">
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-amber-500 focus:text-navy-900 focus:px-4 focus:py-2">
+      Skip to content
+    </a>
+    <Header />
+    <main id="main" class="pb-20 md:pb-0">
+      <slot />
+    </main>
+    <Footer />
+    <MobileStickyBar />
+  </body>
+</html>

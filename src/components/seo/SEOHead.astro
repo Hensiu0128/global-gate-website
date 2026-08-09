@@ -1,0 +1,40 @@
+---
+import { buildTitle, canonicalUrl } from '../../lib/seo';
+import { SITE } from '../../config/site';
+
+interface Props {
+  title?: string;
+  description: string;
+  pathname: string;
+  ogImage?: string;
+  noindex?: boolean;
+}
+
+const { title, description, pathname, ogImage = '/images/og-default.jpg', noindex = false } = Astro.props;
+const fullTitle = buildTitle(title);
+const canonical = canonicalUrl(pathname);
+const ogImageUrl = new URL(ogImage, SITE.url).href;
+---
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={SITE.name} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImageUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageUrl} />
+
+<link rel="sitemap" href="/sitemap-index.xml" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
