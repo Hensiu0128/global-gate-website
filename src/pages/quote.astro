@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+import QuoteForm from '../components/forms/QuoteForm.astro';
+import { SITE } from '../config/site';
+import { telHref, formatPhone } from '../lib/format';
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Request a Quote', href: '/quote' },
+];
+const description =
+  'Request an ocean, air, customs, or trucking quote from Global Gate Logistics. Tell us your route and cargo, and we return rates within 24 business hours.';
+---
+<BaseLayout title="Request a Quote" {description} pathname="/quote" {breadcrumbs}>
+  <div class="bg-navy-900">
+    <Breadcrumbs trail={breadcrumbs} />
+    <div class="container-gg pb-16 md:pb-24 pt-4 grid lg:grid-cols-2 gap-12">
+      <div>
+        <h1 class="text-white mb-6" style="font-size:clamp(2.5rem,6vw,4rem)">
+          GET YOUR<br /><span class="text-amber-400">RATE.</span>
+        </h1>
+        <p class="text-slate-300 text-lg leading-relaxed mb-8">
+          Give us the route and the cargo. We come back with a rate within
+          {SITE.quoteTurnaroundHours} business hours &mdash; no obligation, no account required.
+        </p>
+        <div class="bg-navy-800/40 border border-white/10 rounded-2xl p-6 space-y-4">
+          <p class="font-display text-white font-bold">Prefer to talk it through?</p>
+          {SITE.phones.map((p) => (
+            <p>
+              <a href={telHref(p.number)} class="text-amber-400 hover:text-amber-300 font-display text-lg">
+                {formatPhone(p.number)}
+              </a>
+              <span class="text-slate-500 text-sm ml-2">{p.label}</span>
+            </p>
+          ))}
+          <p>
+            <a href={`mailto:${SITE.email}`} class="text-slate-300 hover:text-amber-400 text-sm">{SITE.email}</a>
+          </p>
+        </div>
+      </div>
+      <div class="bg-navy-800/40 border border-white/10 rounded-2xl p-6 md:p-8">
+        <QuoteForm />
+      </div>
+    </div>
+  </div>
+</BaseLayout>

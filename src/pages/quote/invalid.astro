@@ -1,0 +1,25 @@
+---
+// Landing page for a native (no-JS) POST to /api/quote that failed validation.
+// A no-JS visitor can't read a query string, so the endpoint 303-redirects here
+// instead of back to /quote — the query-string approach would leave them on the
+// quote page with no explanation at all.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const description =
+  "Some details on your Global Gate Logistics quote request were missing or invalid. Please try again.";
+---
+<BaseLayout title="Check Your Details" {description} pathname="/quote/invalid" noindex={true}>
+  <div class="bg-navy-900">
+    <div class="container-gg py-20 md:py-28 max-w-2xl mx-auto text-center">
+      <p class="text-amber-400 font-display uppercase tracking-[0.08em] text-sm mb-4">One more step</p>
+      <h1 class="text-white mb-6" style="font-size:clamp(2.5rem,6vw,4rem)">
+        CHECK YOUR<br /><span class="text-amber-400">DETAILS.</span>
+      </h1>
+      <p class="text-slate-300 text-lg leading-relaxed mb-10">
+        Some of the details on your quote request were missing or couldn't be read, so nothing was
+        sent. Please go back and try again &mdash; it only takes a minute.
+      </p>
+      <a href="/quote" class="btn-amber inline-flex px-7 py-4 rounded-lg">Try Again</a>
+    </div>
+  </div>
+</BaseLayout>

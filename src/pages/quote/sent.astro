@@ -1,0 +1,29 @@
+---
+// Landing page for a native (no-JS) POST to /api/quote after the mail client
+// confirms delivery. A no-JS visitor can't read a query string, so the D1 rule
+// (never claim success we haven't earned) requires this to be its own route,
+// reachable only from the endpoint's success redirect — never linked in nav.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE } from '../../config/site';
+
+const description = `Your quote request has been received. Global Gate Logistics will send rates within ${SITE.quoteTurnaroundHours} business hours.`;
+---
+<BaseLayout title="Request Received" {description} pathname="/quote/sent" noindex={true}>
+  <div class="bg-navy-900">
+    <div class="container-gg py-20 md:py-28 max-w-2xl mx-auto text-center">
+      <p class="text-amber-400 font-display uppercase tracking-[0.08em] text-sm mb-4">Thank you</p>
+      <h1 class="text-white mb-6" style="font-size:clamp(2.5rem,6vw,4rem)">
+        REQUEST<br /><span class="text-amber-400">RECEIVED.</span>
+      </h1>
+      <p class="text-slate-300 text-lg leading-relaxed mb-4">
+        We've got your shipment details. A member of our team will review your route and cargo and
+        send rates within {SITE.quoteTurnaroundHours} business hours.
+      </p>
+      <p class="text-slate-400 text-base leading-relaxed mb-10">
+        No further action is needed on your end &mdash; we'll reach out using the contact details
+        you provided.
+      </p>
+      <a href="/" class="btn-amber inline-flex px-7 py-4 rounded-lg">Back to Home</a>
+    </div>
+  </div>
+</BaseLayout>

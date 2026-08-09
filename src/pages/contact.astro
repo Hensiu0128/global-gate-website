@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+import QuoteForm from '../components/forms/QuoteForm.astro';
+import CTABand from '../components/ui/CTABand.astro';
+import { SITE } from '../config/site';
+import { telHref, formatPhone, formatAddressOneLine } from '../lib/format';
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Contact', href: '/contact' },
+];
+const description =
+  'Contact Global Gate Logistics in Queens, New York. Call 631-596-5591, email our operations team, or send your shipment details for a rate within 24 business hours.';
+---
+<BaseLayout title="Contact Us" {description} pathname="/contact" {breadcrumbs}>
+  <div class="bg-navy-900">
+    <Breadcrumbs trail={breadcrumbs} />
+    <div class="container-gg pb-16 md:pb-24 pt-4">
+      <h1 class="text-white mb-4" style="font-size:clamp(2.5rem,6vw,4rem)">
+        TALK TO<br /><span class="text-amber-400">OUR TEAM.</span>
+      </h1>
+      <p class="text-slate-400 text-lg max-w-2xl mb-12">
+        We're minutes from JFK. Visit during business hours, call, or send your shipment details
+        and we'll come straight back to you.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-10 md:gap-14">
+        <div class="space-y-4">
+          <div class="flex items-start gap-4 bg-white/5 border border-white/10 rounded-xl p-5">
+            <div>
+              <p class="text-white font-semibold text-sm mb-1">Office</p>
+              <address class="not-italic text-slate-400 text-sm leading-relaxed">
+                {formatAddressOneLine(SITE.address)}
+              </address>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4 bg-white/5 border border-white/10 rounded-xl p-5">
+            <div>
+              <p class="text-white font-semibold text-sm mb-1">Phone</p>
+              {SITE.phones.map((p) => (
+                <p>
+                  <a href={telHref(p.number)} class="text-slate-400 hover:text-amber-400 text-sm transition-colors">
+                    {formatPhone(p.number)}
+                  </a>
+                  <span class="text-slate-600 text-xs ml-2">{p.label}</span>
+                </p>
+              ))}
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4 bg-white/5 border border-white/10 rounded-xl p-5">
+            <div>
+              <p class="text-white font-semibold text-sm mb-1">Email</p>
+              <a href={`mailto:${SITE.email}`} class="text-slate-400 hover:text-amber-400 text-sm transition-colors">
+                {SITE.email}
+              </a>
+            </div>
+          </div>
+
+          {SITE.hours.display && (
+            <div class="flex items-start gap-4 bg-white/5 border border-white/10 rounded-xl p-5">
+              <div>
+                <p class="text-white font-semibold text-sm mb-1">Business hours</p>
+                <p class="text-slate-400 text-sm">{SITE.hours.display}</p>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div class="bg-navy-800/40 border border-white/10 rounded-2xl p-6 md:p-8">
+          <QuoteForm compact />
+        </div>
+      </div>
+    </div>
+  </div>
+  <CTABand />
+</BaseLayout>

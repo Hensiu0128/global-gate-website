@@ -53,7 +53,10 @@ export const POST: APIRoute = async ({ request }) => {
   // when JavaScript is unavailable, and as JSON via fetch when it is. A
   // browser following a native form POST must land on a real page — not a
   // JSON blob — so every exit point below branches on `isFormPost` between
-  // a JSON response and a 303 redirect to a `/quote?...` query flag.
+  // a JSON response and a 303 redirect to a dedicated static confirmation
+  // page (/quote/sent, /quote/invalid, /quote/error). A query string on
+  // /quote would be silent for the no-JS visitor it's meant for, since a
+  // statically built page can't read one without JavaScript.
   const contentType = request.headers.get('content-type') ?? '';
   const isFormPost =
     contentType.includes('application/x-www-form-urlencoded') ||
@@ -66,7 +69,7 @@ export const POST: APIRoute = async ({ request }) => {
       : await request.json();
   } catch {
     return isFormPost
-      ? seeOther('/quote?error=1')
+      ? seeOther('/quote/error')
       : json({ ok: false, errors: { form: 'Invalid request body.' } }, 400);
   }
 
@@ -76,13 +79,13 @@ export const POST: APIRoute = async ({ request }) => {
   // mean delivery happened; every other path in this file must never do that (see D1).
   const honeypot = (payload as Record<string, unknown>)?.company_website;
   if (typeof honeypot === 'string' && honeypot.trim() !== '') {
-    return isFormPost ? seeOther('/quote?sent=1') : json({ ok: true }, 200);
+    return isFormPost ? seeOther('/quote/sent') : json({ ok: true }, 200);
   }
 
   const result = validateQuote(payload);
   if (!result.ok) {
     return isFormPost
-      ? seeOther('/quote?invalid=1')
+      ? seeOther('/quote/invalid')
       : json({ ok: false, errors: result.errors }, 400);
   }
 
@@ -92,7 +95,7 @@ export const POST: APIRoute = async ({ request }) => {
 
   const failure = () =>
     isFormPost
-      ? seeOther('/quote?error=1')
+      ? seeOther('/quote/error')
       : json(
           {
             ok: false,
@@ -117,7 +120,7 @@ export const POST: APIRoute = async ({ request }) => {
       html: buildEmailBody(result.data),
     });
     if (error) return failure();
-    return isFormPost ? seeOther('/quote?sent=1') : json({ ok: true }, 200);
+    return isFormPost ? seeOther('/quote/sent') : json({ ok: true }, 200);
   } catch {
     return failure();
   }

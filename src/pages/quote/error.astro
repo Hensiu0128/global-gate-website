@@ -1,0 +1,40 @@
+---
+// Landing page for a native (no-JS) POST to /api/quote where delivery failed
+// (missing config, mail client error, or thrown exception). D1 governs here
+// absolutely: this route must never be reached after a false success, only
+// after the mail client has confirmed the message was NOT delivered.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE } from '../../config/site';
+import { telHref, formatPhone } from '../../lib/format';
+
+const primary = SITE.phones[0];
+const description = `We could not deliver your Global Gate Logistics quote request. Call ${formatPhone(primary.number)} or email ${SITE.email} and our team will help right away.`;
+---
+<BaseLayout title="We Could Not Send That" {description} pathname="/quote/error" noindex={true}>
+  <div class="bg-navy-900">
+    <div class="container-gg py-20 md:py-28 max-w-2xl mx-auto text-center">
+      <p class="text-amber-400 font-display uppercase tracking-[0.08em] text-sm mb-4">We're sorry</p>
+      <h1 class="text-white mb-6" style="font-size:clamp(2.5rem,6vw,4rem)">
+        THAT DIDN'T<br /><span class="text-amber-400">GO THROUGH.</span>
+      </h1>
+      <p class="text-slate-300 text-lg leading-relaxed mb-8">
+        Something went wrong on our end and your request did not reach us. Please don't resend it
+        through the form &mdash; call or email us directly and we'll take your details right away.
+      </p>
+      <div class="bg-navy-800/40 border border-white/10 rounded-2xl p-6 inline-block text-left space-y-4">
+        <div>
+          <p class="text-white font-semibold text-sm mb-1">Call us</p>
+          <a href={telHref(primary.number)} class="text-amber-400 hover:text-amber-300 font-display text-lg">
+            {formatPhone(primary.number)}
+          </a>
+        </div>
+        <div>
+          <p class="text-white font-semibold text-sm mb-1">Email us</p>
+          <a href={`mailto:${SITE.email}`} class="text-slate-300 hover:text-amber-400 text-sm">
+            {SITE.email}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
