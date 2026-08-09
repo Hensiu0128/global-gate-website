@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+import ServiceCard from '../../components/services/ServiceCard.astro';
+import CTABand from '../../components/ui/CTABand.astro';
+import TrustBar from '../../components/trust/TrustBar.astro';
+import { SERVICES } from '../../data/services';
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Services', href: '/services' },
+];
+const description =
+  'Ocean FCL and LCL, air freight, customs clearance, warehousing near JFK, domestic trucking, and overseas agent services — all handled in-house by Global Gate Logistics.';
+---
+<BaseLayout title="Freight Forwarding Services" {description} pathname="/services" {breadcrumbs}>
+  <div class="bg-navy-900">
+    <Breadcrumbs trail={breadcrumbs} />
+    <div class="container-gg pb-12 pt-4">
+      <h1 class="text-white mb-6" style="font-size:clamp(2.5rem,6vw,4rem)">
+        EVERY LEG,<br /><span class="text-amber-400">ONE TEAM.</span>
+      </h1>
+      <p class="text-slate-300 text-lg max-w-2xl leading-relaxed">
+        Ocean, air, customs, warehousing, and trucking are handled in-house rather than
+        subcontracted &mdash; so your cargo never waits at a handoff between vendors.
+      </p>
+    </div>
+    <div class="container-gg pb-16">
+      <h2 class="sr-only">Our services</h2>
+      <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {SERVICES.map((service) => <ServiceCard {service} />)}
+      </ul>
+    </div>
+  </div>
+  <TrustBar />
+  <CTABand />
+</BaseLayout>

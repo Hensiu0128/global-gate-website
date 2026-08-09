@@ -1,0 +1,28 @@
+---
+import ServiceLayout from '../../layouts/ServiceLayout.astro';
+import { SERVICES, type Service } from '../../data/services';
+
+export function getStaticPaths() {
+  return SERVICES.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+interface Props { service: Service; }
+const { service } = Astro.props;
+const related = SERVICES.filter((s) => s.slug !== service.slug);
+---
+<ServiceLayout {service}>
+  <ul slot="related" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    {related.map((s) => (
+      <li>
+        <a href={`/services/${s.slug}`}
+           class="block bg-white border border-slate-100 rounded-xl p-5 hover:border-amber-400 transition-colors">
+          <span class="font-display text-navy-900 font-bold">{s.name}</span>
+          <span class="block text-slate-500 text-sm mt-1">{s.tagline}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</ServiceLayout>
