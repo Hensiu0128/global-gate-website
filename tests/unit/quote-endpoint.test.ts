@@ -81,4 +81,32 @@ describe('POST /api/quote', () => {
     expect(res.status).toBe(200);
     expect(sendMock).not.toHaveBeenCalled();
   });
+
+  it('fails when RESEND_API_KEY is missing — an unconfigured deploy must not fake success', async () => {
+    delete process.env.RESEND_API_KEY;
+    const { POST } = await import('../../src/pages/api/quote');
+    const res = await POST({ request: post(valid) } as any);
+    expect(res.status).toBe(502);
+    expect(sendMock).not.toHaveBeenCalled();
+    const body = await res.json();
+    expect(body.ok).toBe(false);
+    expect(body.fallback.email).toBe('Op01@global-gate.us');
+  });
+
+  it('fails when QUOTE_FROM_EMAIL is missing', async () => {
+    delete process.env.QUOTE_FROM_EMAIL;
+    const { POST } = await import('../../src/pages/api/quote');
+    const res = await POST({ request: post(valid) } as any);
+    expect(res.status).toBe(502);
+    expect(sendMock).not.toHaveBeenCalled();
+  });
+
+  it('fails when no email configuration is present at all', async () => {
+    delete process.env.RESEND_API_KEY;
+    delete process.env.QUOTE_FROM_EMAIL;
+    const { POST } = await import('../../src/pages/api/quote');
+    const res = await POST({ request: post(valid) } as any);
+    expect(res.status).toBe(502);
+    expect(sendMock).not.toHaveBeenCalled();
+  });
 });
