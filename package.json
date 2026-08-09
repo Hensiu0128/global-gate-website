@@ -12,7 +12,9 @@
     "preview": "astro preview",
     "astro": "astro",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:build": "astro build && vitest run --config vitest.build.config.ts",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
@@ -21,8 +23,11 @@
     "resend": "^6.18.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.62.1",
     "@tailwindcss/vite": "^4.3.3",
     "@vitest/ui": "^4.1.10",
+    "glob": "^13.0.6",
+    "linkedom": "^0.18.13",
     "tailwindcss": "^4.3.3",
     "vitest": "^4.1.10"
   }
