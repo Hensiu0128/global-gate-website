@@ -48,6 +48,10 @@
     letter-spacing: -0.01em;
   }
   :focus-visible { outline: 2px solid var(--color-amber-400); outline-offset: 2px; }
+  /* Older WebKit (pre-15.4 Safari) paints the <summary> disclosure triangle via
+     ::-webkit-details-marker rather than ::marker; list-none + marker:content-[''] alone
+     don't reach it, so hide it explicitly for the mobile nav <details> toggle. */
+  summary::-webkit-details-marker { display: none; }
 }
 
 @layer components {
