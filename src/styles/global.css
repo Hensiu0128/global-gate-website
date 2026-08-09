@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy-950: #060E1A;
+  --color-navy-900: #0A1628;
+  --color-navy-800: #1E3A5F;
+  --color-amber-500: #F59E0B;
+  --color-amber-400: #FBBF24;
+
+  --font-display: "Barlow Condensed", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Source Sans 3", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-body);
+    background-color: #ffffff;
+    color: #334155;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4, .font-display { font-family: var(--font-display); }
+  h1 {
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+  }
+  :focus-visible { outline: 2px solid var(--color-amber-400); outline-offset: 2px; }
+}
+
+@layer components {
+  .container-gg { width: 100%; max-width: 80rem; margin-inline: auto; padding-inline: 1.25rem; }
+  .btn-amber {
+    display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+    background-color: var(--color-amber-500); color: var(--color-navy-900);
+    font-family: var(--font-display); font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    transition: background-color .2s ease;
+  }
+  .btn-amber:hover { background-color: var(--color-amber-400); }
+  .btn-outline {
+    display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+    border: 1px solid rgba(255,255,255,.3); color: #fff;
+    font-family: var(--font-display); font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    transition: color .2s ease, border-color .2s ease;
+  }
+  .btn-outline:hover { color: var(--color-amber-400); border-color: var(--color-amber-400); }
+}
