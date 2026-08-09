@@ -1,15 +1,29 @@
 ---
-import '../styles/global.css';
----
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/home/Hero.astro';
+import TrustBar from '../components/trust/TrustBar.astro';
+import About from '../components/home/About.astro';
+import ServiceGrid from '../components/services/ServiceGrid.astro';
+import WhyUs from '../components/home/WhyUs.astro';
+import LogoStrip from '../components/trust/LogoStrip.astro';
+import Testimonials from '../components/trust/Testimonials.astro';
+import CTABand from '../components/ui/CTABand.astro';
+import { SITE } from '../config/site';
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Global Gate</title>
-	</head>
-	<body>
-		<h1>Global Gate</h1>
-	</body>
-</html>
+const description =
+  'International freight forwarder and NVOCC specializing in Asia–America cargo. Ocean FCL & LCL, air freight, customs clearance, JFK warehousing, and nationwide trucking.';
+---
+<BaseLayout description={description} pathname="/">
+  <Hero />
+  <TrustBar />
+  <About />
+  <ServiceGrid />
+  <CTABand />
+  <WhyUs />
+  <LogoStrip />
+  <Testimonials />
+  <CTABand
+    heading="Tell us where it's going."
+    body={`Ocean, air, customs, warehousing, trucking — one team handles all of it. Rates within ${SITE.quoteTurnaroundHours} business hours.`}
+  />
+</BaseLayout>

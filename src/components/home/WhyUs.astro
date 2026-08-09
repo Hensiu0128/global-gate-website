@@ -1,0 +1,43 @@
+---
+const reasons = [
+  {
+    title: 'Asia–America specialists',
+    body: 'Deep expertise in Asia to America routing, earning the daily support of businesses moving goods in and out of the United States.',
+  },
+  {
+    title: 'Solutions, not just bookings',
+    body: 'Our team understands each shipment’s time and cost requirements before recommending a routing, rather than quoting the first option available.',
+  },
+  {
+    title: 'Direct carrier rates',
+    body: 'Trust built with major shipping carriers and airlines secures reasonable service contract rates that we pass on to our customers.',
+  },
+  {
+    title: 'End-to-end under one roof',
+    body: 'Ocean, air, warehousing, customs clearance, and domestic trucking are handled in-house, so nothing is lost between vendors.',
+  },
+];
+---
+<section aria-labelledby="why-heading" class="bg-slate-50 py-16 md:py-24">
+  <div class="container-gg">
+    <div class="mb-12">
+      <p class="text-amber-500 text-sm font-bold tracking-widest uppercase">Why Global Gate</p>
+      <h2 id="why-heading" class="font-display text-navy-900 text-3xl md:text-5xl font-bold mt-2">
+        What you get working with us
+      </h2>
+    </div>
+    <ol class="grid sm:grid-cols-2 gap-6 md:gap-8">
+      {reasons.map((reason, i) => (
+        <li class="bg-white rounded-xl p-7 md:p-8 border border-slate-100 flex gap-5">
+          <span class="font-display text-5xl font-bold text-slate-100 leading-none select-none" aria-hidden="true">
+            {String(i + 1).padStart(2, '0')}
+          </span>
+          <div>
+            <h3 class="font-display text-navy-900 text-xl font-bold mb-2">{reason.title}</h3>
+            <p class="text-slate-500 text-sm leading-relaxed">{reason.body}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

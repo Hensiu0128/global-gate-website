@@ -1,0 +1,48 @@
+---
+import { SITE } from '../../config/site';
+
+const points = [
+  'Trusted by major shipping carriers and airlines',
+  'Specialized in Asia–America cargo routing',
+  'Worldwide connections to overseas cargo agents',
+  'Personalized service for every client',
+];
+---
+<section aria-labelledby="about-heading" class="bg-white py-16 md:py-24">
+  <div class="container-gg grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+    <div>
+      <p class="text-amber-500 text-sm font-bold tracking-widest uppercase">Who We Are</p>
+      <h2 id="about-heading" class="font-display text-navy-900 text-3xl md:text-5xl font-bold mt-2 mb-6">
+        One forwarder, every leg of the journey
+      </h2>
+      <p class="text-slate-600 text-base md:text-lg leading-relaxed mb-5">
+        {SITE.name} is an international freight forwarder and a full non-vessel operating common
+        carrier (NVOCC) and IATA member. Direct service contracts with the major shipping carriers
+        and airlines mean we quote from our own rates rather than reselling another forwarder's.
+      </p>
+      <p class="text-slate-600 text-base md:text-lg leading-relaxed">
+        That lets us move cargo worldwide regardless of origin or destination, supported by our
+        Queens operation and a well-developed agent network abroad.
+      </p>
+      <a href="/about" class="inline-block mt-6 font-display uppercase tracking-[0.08em] text-sm text-amber-500 hover:text-amber-400">
+        More about us <span aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+
+    <div class="bg-navy-900 rounded-2xl p-8 md:p-10">
+      <h3 class="font-display text-white text-xl font-bold mb-6 tracking-wide">Why shippers choose us</h3>
+      <ul class="space-y-4">
+        {points.map((point) => (
+          <li class="flex gap-3 text-slate-300 text-sm md:text-base leading-snug">
+            <span class="text-amber-400 shrink-0" aria-hidden="true">&#10003;</span>
+            {point}
+          </li>
+        ))}
+      </ul>
+      <p class="mt-8 pt-6 border-t border-white/10 text-slate-400 text-sm italic leading-relaxed">
+        Our team takes the time to understand each client's requirements and finds the solution
+        that best meets their needs.
+      </p>
+    </div>
+  </div>
+</section>
