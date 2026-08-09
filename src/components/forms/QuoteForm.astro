@@ -1,0 +1,177 @@
+---
+import { SHIPPING_MODES } from '../../lib/quote-validation';
+import { SITE } from '../../config/site';
+
+interface Props { compact?: boolean; }
+const { compact = false } = Astro.props;
+
+const inputClass =
+  'w-full bg-white/5 border border-white/15 rounded-lg px-4 py-3 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-amber-400 transition-colors';
+const labelClass = 'block text-slate-300 text-sm font-semibold mb-2 tracking-wide';
+---
+<form id="quote-form" action="/api/quote" method="post" class="space-y-8" novalidate>
+  <fieldset data-step="1" class="space-y-5 border-0 p-0 m-0">
+    <legend class="font-display text-white text-lg font-bold mb-2">1. Your shipment</legend>
+
+    <div>
+      <label class={labelClass} for="q-mode">Shipping mode</label>
+      <select id="q-mode" name="mode" required class={inputClass}>
+        <option value="">Select a mode</option>
+        {SHIPPING_MODES.map((mode) => <option value={mode}>{mode}</option>)}
+      </select>
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-5">
+      <div>
+        <label class={labelClass} for="q-origin">Origin</label>
+        <input id="q-origin" name="origin" required class={inputClass} placeholder="Port, city, or country" />
+      </div>
+      <div>
+        <label class={labelClass} for="q-destination">Destination</label>
+        <input id="q-destination" name="destination" required class={inputClass} placeholder="US city or ZIP" />
+      </div>
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-5">
+      <div>
+        <label class={labelClass} for="q-cargo">Cargo weight &amp; volume</label>
+        <input id="q-cargo" name="cargo" required class={inputClass} placeholder="e.g. 12 CBM, 3200 kg — or 1x40HC" />
+      </div>
+      <div>
+        <label class={labelClass} for="q-readyDate">Ready date</label>
+        <input id="q-readyDate" name="readyDate" type="date" class={inputClass} />
+      </div>
+    </div>
+
+    <div>
+      <label class={labelClass} for="q-commodity">Commodity <span class="text-slate-500 font-normal">(optional)</span></label>
+      <input id="q-commodity" name="commodity" class={inputClass} placeholder="What are you shipping?" />
+    </div>
+
+    <button type="button" data-next class="btn-amber w-full py-4 text-base rounded-lg hidden">
+      Continue &rarr;
+    </button>
+  </fieldset>
+
+  <fieldset data-step="2" class="space-y-5 border-0 p-0 m-0">
+    <legend class="font-display text-white text-lg font-bold mb-2">2. Where to send the rate</legend>
+
+    <div class="grid sm:grid-cols-2 gap-5">
+      <div>
+        <label class={labelClass} for="q-name">Your name</label>
+        <input id="q-name" name="name" required class={inputClass} />
+      </div>
+      <div>
+        <label class={labelClass} for="q-company">Company</label>
+        <input id="q-company" name="company" required class={inputClass} />
+      </div>
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-5">
+      <div>
+        <label class={labelClass} for="q-email">Email</label>
+        <input id="q-email" name="email" type="email" required class={inputClass} />
+      </div>
+      <div>
+        <label class={labelClass} for="q-phone">Phone</label>
+        <input id="q-phone" name="phone" type="tel" required class={inputClass} />
+      </div>
+    </div>
+
+    {!compact && (
+      <div>
+        <label class={labelClass} for="q-notes">Anything else? <span class="text-slate-500 font-normal">(optional)</span></label>
+        <textarea id="q-notes" name="notes" rows="3" class={inputClass}></textarea>
+      </div>
+    )}
+
+    <div class="hidden" aria-hidden="true">
+      <label for="q-company_website">Leave this field empty</label>
+      <input id="q-company_website" name="company_website" tabindex="-1" autocomplete="off" />
+    </div>
+
+    <button type="submit" class="btn-amber w-full py-4 text-base rounded-lg">Send My Request</button>
+    <p class="text-slate-400 text-sm text-center">
+      Rates back within {SITE.quoteTurnaroundHours} business hours. No obligation.
+    </p>
+  </fieldset>
+
+  <div id="quote-status" role="status" aria-live="polite"></div>
+</form>
+
+<script>
+  const form = document.getElementById('quote-form') as HTMLFormElement | null;
+  const status = document.getElementById('quote-status');
+  if (form && status) {
+    const stepOne = form.querySelector('[data-step="1"]') as HTMLFieldSetElement | null;
+    const stepTwo = form.querySelector('[data-step="2"]') as HTMLFieldSetElement | null;
+    const next = form.querySelector('[data-next]') as HTMLButtonElement | null;
+
+    if (stepOne && stepTwo && next) {
+      // JS is available: switch to two-step mode.
+      next.classList.remove('hidden');
+      stepTwo.hidden = true;
+
+      next.addEventListener('click', () => {
+        const required = [...stepOne.querySelectorAll('[required]')] as HTMLInputElement[];
+        if (required.every((el) => el.reportValidity())) {
+          stepOne.hidden = true;
+          stepTwo.hidden = false;
+          stepTwo.querySelector('input')?.focus();
+        }
+      });
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const submit = form.querySelector('[type="submit"]') as HTMLButtonElement | null;
+      if (submit) {
+        submit.disabled = true;
+        submit.textContent = 'Sending…';
+      }
+      status.innerHTML = '';
+
+      // `submit` is a plain query result, not a NodeList — the DOM node it points
+      // to stays valid even after the success branch below replaces form.innerHTML;
+      // the `finally` reset below just becomes a harmless no-op on a detached node.
+
+      try {
+        const payload = Object.fromEntries(new FormData(form).entries());
+        const res = await fetch('/api/quote', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const body = await res.json();
+
+        if (res.ok && body.ok) {
+          form.innerHTML =
+            '<div class="bg-amber-500/20 border border-amber-500/40 rounded-xl p-8 text-center">' +
+            '<p class="font-display text-amber-400 text-xl font-bold mb-2">Request received</p>' +
+            '<p class="text-slate-300 text-sm">We’ve got your details and will send rates within 24 business hours.</p>' +
+            '</div>';
+          return;
+        }
+
+        // Never claim success we did not earn.
+        const fallback = body.fallback ?? {};
+        status.innerHTML =
+          '<div class="border border-red-400/40 bg-red-500/10 rounded-xl p-5 text-sm text-red-200">' +
+          '<p class="font-semibold mb-1">We couldn’t send that automatically.</p>' +
+          '<p>Please call <a class="underline" href="tel:+1' + String(fallback.phone ?? '').replace(/\D/g, '') + '">' +
+          (fallback.phone ?? '') + '</a> or email <a class="underline" href="mailto:' +
+          (fallback.email ?? '') + '">' + (fallback.email ?? '') + '</a> and we’ll respond right away.</p>' +
+          '</div>';
+      } catch {
+        status.innerHTML =
+          '<div class="border border-red-400/40 bg-red-500/10 rounded-xl p-5 text-sm text-red-200">' +
+          '<p>Network error. Please call us and we’ll take the details over the phone.</p></div>';
+      } finally {
+        if (submit) {
+          submit.disabled = false;
+          submit.textContent = 'Send My Request';
+        }
+      }
+    });
+  }
+</script>
