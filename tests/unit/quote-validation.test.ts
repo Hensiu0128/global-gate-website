@@ -95,6 +95,24 @@ describe('validateQuote', () => {
     expect(result.ok).toBe(false);
     if (!result.ok) expect(result.errors.email).toBeDefined();
   });
+
+  it('normalizes CRLF in notes to LF instead of rejecting it (native no-JS submission sends CRLF)', () => {
+    const result = validateQuote({ ...valid, notes: 'line one\r\nline two' });
+    expect(result.ok).toBe(true);
+    if (result.ok) expect(result.data.notes).toBe('line one\nline two');
+  });
+
+  it('normalizes a lone CR in notes to LF', () => {
+    const result = validateQuote({ ...valid, notes: 'a\rb' });
+    expect(result.ok).toBe(true);
+    if (result.ok) expect(result.data.notes).toBe('a\nb');
+  });
+
+  it('still rejects CRLF injection in origin after the notes normalization fix', () => {
+    const result = validateQuote({ ...valid, origin: 'Ningbo\r\nBcc: x@y.com' });
+    expect(result.ok).toBe(false);
+    if (!result.ok) expect(result.errors.origin).toBeDefined();
+  });
 });
 
 describe('formatQuoteSubject', () => {

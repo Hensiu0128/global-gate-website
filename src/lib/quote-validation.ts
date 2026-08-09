@@ -75,7 +75,11 @@ export function validateQuote(input: unknown): ValidationResult {
     company: str('company'),
     email: str('email'),
     phone: str('phone'),
-    notes: str('notes'),
+    // Native form submission normalizes textarea line breaks to CRLF (HTML
+    // spec). Normalize to LF so the no-JS path is not rejected for typing
+    // two lines; every other field stays strictly single-line, so a `\r`
+    // anywhere in them is still caught by the control-character check below.
+    notes: str('notes').replace(/\r\n?/g, '\n'),
   };
 
   for (const field of REQUIRED) {
