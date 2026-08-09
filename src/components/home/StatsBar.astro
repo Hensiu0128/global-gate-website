@@ -1,0 +1,18 @@
+---
+import { STATS } from '../../data/stats';
+---
+<div class="absolute bottom-0 inset-x-0 z-10 bg-navy-900/80 backdrop-blur-sm border-t border-white/10">
+  <div class="container-gg">
+    <dl class="grid grid-cols-3 divide-x divide-white/10 py-5">
+      {STATS.map((stat) => (
+        <div class="text-center px-2">
+          <dt class="sr-only">{stat.label}</dt>
+          <dd>
+            <span class="block font-display text-amber-400 text-2xl md:text-3xl font-bold">{stat.value}</span>
+            <span class="block text-slate-400 text-[0.7rem] md:text-xs tracking-wider uppercase mt-0.5">{stat.label}</span>
+          </dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</div>

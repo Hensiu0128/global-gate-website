@@ -1,0 +1,53 @@
+---
+import Button from '../ui/Button.astro';
+import StatsBar from './StatsBar.astro';
+import { SITE } from '../../config/site';
+import { telHref, formatPhone } from '../../lib/format';
+
+const primary = SITE.phones[0];
+const badgeText = SITE.credentials.fmcNumber
+  ? `NVOCC & IATA Member · FMC ${SITE.credentials.fmcNumber}`
+  : 'NVOCC & IATA Member';
+---
+<section class="relative min-h-[85vh] flex items-center overflow-hidden">
+  <img
+    src="/images/hero-bg.webp"
+    alt=""
+    fetchpriority="high"
+    decoding="async"
+    width="1920"
+    height="1080"
+    class="absolute inset-0 w-full h-full object-cover"
+  />
+  <div class="absolute inset-0 bg-gradient-to-r from-navy-900/95 via-navy-900/75 to-navy-900/40"></div>
+
+  <div class="container-gg relative z-10 pt-16 pb-32">
+    <p class="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/40 text-amber-400 text-xs font-semibold tracking-widest uppercase px-4 py-2 rounded-full mb-6">
+      <span class="w-1.5 h-1.5 bg-amber-400 rounded-full" aria-hidden="true"></span>
+      {badgeText}
+    </p>
+
+    <h1 class="text-white mb-6">
+      ASIA TO AMERICA,<br />
+      <span class="text-amber-400">DOOR TO DOOR.</span>
+    </h1>
+
+    <p class="text-slate-300 text-lg md:text-xl leading-relaxed mb-8 max-w-2xl">
+      Ocean FCL &amp; LCL, air freight, customs clearance, JFK warehousing, and nationwide
+      trucking &mdash; handled in-house by one team.
+      <strong class="text-white font-semibold">Rates back in {SITE.quoteTurnaroundHours} hours.</strong>
+    </p>
+
+    <div class="flex flex-wrap gap-4">
+      <Button href="/quote" class="px-8 py-4 text-base rounded">Get My Rate</Button>
+      <a
+        href={telHref(primary.number)}
+        class="btn-outline px-8 py-4 text-base rounded"
+      >
+        <span aria-hidden="true">&#9742;</span> {formatPhone(primary.number)}
+      </a>
+    </div>
+  </div>
+
+  <StatsBar />
+</section>
