@@ -1,3 +1,83 @@
 ---
+import { SITE } from '../../config/site';
+import { telHref, formatPhone, formatAddressOneLine } from '../../lib/format';
+
+const year = new Date().getFullYear();
+const addressLine = formatAddressOneLine(SITE.address);
+
+const socialLinks = (
+  [
+    ['Facebook', SITE.social.facebook],
+    ['Instagram', SITE.social.instagram],
+    ['LinkedIn', SITE.social.linkedin],
+  ] as const
+).filter((entry): entry is readonly [string, string] => typeof entry[1] === 'string' && entry[1].length > 0);
+
+const serviceLinks = [
+  ['Ocean Freight', '/services/ocean-freight'],
+  ['Air Freight', '/services/air-freight'],
+  ['Warehousing', '/services/warehousing-distribution'],
+  ['Customs Clearance', '/services/customs-clearance'],
+  ['Domestic Trucking', '/services/domestic-trucking'],
+  ['Agent Network', '/services/overseas-agent-network'],
+];
 ---
-<footer></footer>
+<footer class="bg-navy-950 border-t border-white/10 text-slate-400">
+  <div class="container-gg py-12 grid gap-10 md:grid-cols-4">
+    <div>
+      <p class="font-display font-black text-xl text-white leading-none">{SITE.name}</p>
+      <p class="font-display font-bold text-amber-400 text-sm mt-1">{SITE.tagline}</p>
+      <p class="text-sm mt-4 leading-relaxed">{SITE.description}</p>
+    </div>
+
+    <nav aria-labelledby="footer-services">
+      <h2 id="footer-services" class="font-display uppercase tracking-[0.08em] text-white text-sm mb-4">Services</h2>
+      <ul class="space-y-2 text-sm">
+        {serviceLinks.map(([label, href]) => (
+          <li><a href={href} class="hover:text-amber-400 transition-colors">{label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <nav aria-labelledby="footer-company">
+      <h2 id="footer-company" class="font-display uppercase tracking-[0.08em] text-white text-sm mb-4">Company</h2>
+      <ul class="space-y-2 text-sm">
+        <li><a href="/about" class="hover:text-amber-400 transition-colors">About</a></li>
+        <li><a href="/contact" class="hover:text-amber-400 transition-colors">Contact</a></li>
+        <li><a href="/quote" class="hover:text-amber-400 transition-colors">Request a Quote</a></li>
+        <li><a href="/privacy-policy" class="hover:text-amber-400 transition-colors">Privacy Policy</a></li>
+        <li><a href="/terms" class="hover:text-amber-400 transition-colors">Terms</a></li>
+      </ul>
+    </nav>
+
+    <div>
+      <h2 class="font-display uppercase tracking-[0.08em] text-white text-sm mb-4">Contact</h2>
+      <address class="not-italic text-sm space-y-2">
+        <p>{addressLine}</p>
+        {SITE.phones.map((p) => (
+          <p><a href={telHref(p.number)} class="hover:text-amber-400 transition-colors">{formatPhone(p.number)}</a></p>
+        ))}
+        <p><a href={`mailto:${SITE.email}`} class="hover:text-amber-400 transition-colors">{SITE.email}</a></p>
+        {SITE.hours.display && <p class="text-slate-500">{SITE.hours.display}</p>}
+      </address>
+      {socialLinks.length > 0 && (
+        <ul class="flex gap-3 mt-4">
+          {socialLinks.map(([label, href]) => (
+            <li>
+              <a href={href} rel="noopener noreferrer" target="_blank" class="text-sm hover:text-amber-400 transition-colors">
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </div>
+
+  <div class="border-t border-white/5">
+    <div class="container-gg py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs">
+      <p>&copy; {year} {SITE.legalName}. All Rights Reserved.</p>
+      <p>{addressLine} &middot; {formatPhone(SITE.phones[0].number)}</p>
+    </div>
+  </div>
+</footer>
