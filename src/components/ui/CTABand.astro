@@ -1,0 +1,28 @@
+---
+import Button from './Button.astro';
+import { SITE } from '../../config/site';
+import { telHref, formatPhone } from '../../lib/format';
+
+interface Props { heading?: string; body?: string; }
+const {
+  heading = 'Ready to move your cargo?',
+  body = `Send us your route and we’ll come back with rates within ${SITE.quoteTurnaroundHours} business hours.`,
+} = Astro.props;
+const primary = SITE.phones[0];
+---
+<section class="bg-amber-500">
+  <div class="container-gg py-10 md:py-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+    <div>
+      <h2 class="font-display text-navy-900 text-2xl md:text-3xl font-bold">{heading}</h2>
+      <p class="text-navy-900/80 mt-2 max-w-xl">{body}</p>
+    </div>
+    <div class="flex flex-wrap gap-3 shrink-0">
+      <a href="/quote" class="inline-flex items-center justify-center bg-navy-900 text-white font-display font-bold uppercase tracking-[0.08em] px-7 py-4 rounded hover:bg-navy-800 transition-colors">
+        Get My Rate
+      </a>
+      <a href={telHref(primary.number)} class="inline-flex items-center justify-center border border-navy-900 text-navy-900 font-display font-bold uppercase tracking-[0.08em] px-7 py-4 rounded hover:bg-navy-900 hover:text-white transition-colors">
+        {formatPhone(primary.number)}
+      </a>
+    </div>
+  </div>
+</section>

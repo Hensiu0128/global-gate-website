@@ -1,0 +1,23 @@
+---
+import ServiceCard from './ServiceCard.astro';
+import { SERVICES } from '../../data/services';
+---
+<section aria-labelledby="services-heading" class="bg-navy-900 py-16 md:py-24">
+  <div class="container-gg">
+    <div class="text-center mb-12">
+      <p class="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/40 text-amber-400 text-xs font-bold tracking-widest uppercase px-4 py-2 rounded-full mb-5">
+        What We Do
+      </p>
+      <h2 id="services-heading" class="font-display text-white text-3xl md:text-5xl font-bold">
+        Every step, one team
+      </h2>
+      <p class="text-slate-400 text-base md:text-lg max-w-2xl mx-auto leading-relaxed mt-4">
+        Ocean, air, customs, warehousing, and trucking handled in-house &mdash; so your cargo
+        never waits at a handoff between vendors.
+      </p>
+    </div>
+    <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {SERVICES.map((service) => <ServiceCard service={service} />)}
+    </ul>
+  </div>
+</section>

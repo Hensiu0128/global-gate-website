@@ -1,0 +1,25 @@
+---
+import type { FAQ } from '../../data/services';
+interface Props { faqs: FAQ[]; heading?: string; }
+const { faqs, heading = 'Frequently asked questions' } = Astro.props;
+---
+{faqs.length > 0 && (
+  <section aria-labelledby="faq-heading" class="bg-white py-16 md:py-20">
+    <div class="container-gg max-w-3xl">
+      <h2 id="faq-heading" class="font-display text-navy-900 text-3xl md:text-4xl font-bold mb-8">
+        {heading}
+      </h2>
+      <div class="divide-y divide-slate-200 border-y border-slate-200">
+        {faqs.map((faq) => (
+          <details class="group py-5">
+            <summary class="flex items-center justify-between gap-4 cursor-pointer list-none font-display font-bold text-navy-900 text-lg">
+              {faq.question}
+              <span class="text-amber-500 shrink-0 transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+            </summary>
+            <p class="mt-3 text-slate-600 leading-relaxed">{faq.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
