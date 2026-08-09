@@ -228,7 +228,7 @@ export const SERVICES: Service[] = [
     image: null,
     metaTitle: 'Domestic Trucking & Port Drayage',
     metaDescription:
-      'Port and airport drayage plus nationwide FTL and LTL delivery. Trucking booked alongside your ocean or air freight, with scheduling and no coverage gaps.',
+      'Port and airport drayage plus nationwide FTL and LTL delivery, booked alongside your ocean or air freight, with appointment scheduling and no coverage gaps.',
   },
   {
     slug: 'overseas-agent-network',
@@ -271,7 +271,7 @@ export const SERVICES: Service[] = [
     image: null,
     metaTitle: 'Overseas Agent Network & US Partner',
     metaDescription:
-      'Your United States destination partner for ocean, air, customs, warehousing, and delivery. One counterpart for overseas forwarders, 24-hour rate turnaround.',
+      'Global Gate Logistics is your US destination partner for ocean, air, customs, and warehousing, with 24-hour rate turnaround for overseas forwarders.',
   },
 ];
 
