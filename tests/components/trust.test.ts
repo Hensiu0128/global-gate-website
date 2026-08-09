@@ -17,9 +17,20 @@ describe('TrustBar', () => {
     expect(html).toContain('C-TPAT');
   });
 
-  it('omits the FMC number rather than printing a placeholder when it is unknown', async () => {
+  it('omits FMC entirely while the license number is unknown', async () => {
     const html = await render(TrustBar);
-    expect(html).not.toMatch(/FMC\s*#?\s*(TBD|XXX|_+)/i);
+    // fmcNumber is null today. Any regression that substitutes a placeholder
+    // — `FMC License ${fmcNumber ?? 'TBD'}` and friends — must fail loudly here.
+    expect(html).not.toContain('FMC');
+  });
+
+  it('renders exactly the credentials the business actually holds', async () => {
+    const html = await render(TrustBar);
+    expect(html).toContain('Licensed NVOCC');
+    expect(html).toContain('IATA Member');
+    expect(html).toContain('C-TPAT Certified');
+    // Exactly three — an extra or empty <li> is a filtering bug.
+    expect(html.match(/<li[\s>]/g) ?? []).toHaveLength(3);
   });
 });
 

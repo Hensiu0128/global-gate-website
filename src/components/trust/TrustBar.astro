@@ -6,7 +6,7 @@ const items = [
   SITE.credentials.fmcNumber ? `FMC License ${SITE.credentials.fmcNumber}` : null,
   SITE.credentials.iataNumber ? `IATA ${SITE.credentials.iataNumber}` : 'IATA Member',
   SITE.credentials.ctpatCertified ? 'C-TPAT Certified' : null,
-].filter((v): v is string => v !== null);
+].filter((v): v is string => typeof v === 'string' && v.length > 0);
 ---
 {items.length > 0 && (
   <section aria-label="Certifications and licenses" class="bg-navy-800/40 border-y border-white/10">
