@@ -7,11 +7,14 @@ describe('buildTitle', () => {
   });
   it('returns the full brand title for the homepage', () => {
     expect(buildTitle()).toBe(
-      'Global Gate Logistics | International Freight Forwarder & NVOCC'
+      'Global Gate Logistics | International Freight Forwarder'
     );
   });
   it('keeps titles within the 60-character display limit', () => {
     expect(buildTitle('Ocean Freight').length).toBeLessThanOrEqual(60);
+  });
+  it('keeps the homepage brand title within the 60-character display limit', () => {
+    expect(buildTitle().length).toBeLessThanOrEqual(60);
   });
 });
 

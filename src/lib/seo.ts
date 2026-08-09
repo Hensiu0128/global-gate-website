@@ -1,6 +1,6 @@
 import { SITE } from '../config/site';
 
-const BRAND_TITLE = 'Global Gate Logistics | International Freight Forwarder & NVOCC';
+const BRAND_TITLE = 'Global Gate Logistics | International Freight Forwarder';
 
 /** Page title with brand suffix. Homepage gets the full descriptive brand title. */
 export function buildTitle(pageTitle?: string): string {

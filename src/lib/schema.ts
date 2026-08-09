@@ -60,7 +60,6 @@ export function localBusinessSchema() {
     telephone: e164(SITE.phones[0].number),
     address: postalAddress(),
     openingHours: SITE.hours.schema ?? undefined,
-    priceRange: '$$',
   });
 }
 
@@ -83,7 +82,7 @@ export function serviceSchema(input: { name: string; description: string; url: s
     url: input.url,
     serviceType: input.name,
     provider: { '@type': 'Organization', name: SITE.name, url: SITE.url },
-    areaServed: { '@type': 'Country', name: 'United States' },
+    areaServed: { '@type': 'Country', name: SITE.serviceArea },
   };
 }
 

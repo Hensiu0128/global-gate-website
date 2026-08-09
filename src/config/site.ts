@@ -46,6 +46,8 @@ export interface SiteConfig {
   social: Social;
   founded: number | null;     // spec F6
   quoteTurnaroundHours: number;
+  /** Geographic market served, for schema.org areaServed. */
+  serviceArea: string;
 }
 
 export const SITE: SiteConfig = {
@@ -85,6 +87,7 @@ export const SITE: SiteConfig = {
   },
   founded: null,
   quoteTurnaroundHours: 24,
+  serviceArea: 'United States',
 };
 
 export const NAV_LINKS = [
