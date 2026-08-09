@@ -26,7 +26,18 @@ export type ValidationResult =
   | { ok: false; errors: Record<string, string> };
 
 const MAX_LENGTH = 2000;
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+// Domain labels cannot be empty (rejects "a@b..com") and the TLD must be at
+// least 2 alphabetic characters (rejects "a@b.c"); each dot-separated label
+// is anchored so backtracking cannot smuggle an empty label past it.
+const EMAIL_RE = /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)*\.[A-Za-z]{2,}$/;
+
+// Control characters in a single-line field are almost always an injection
+// attempt — a CRLF reaching an email subject header is the specific risk.
+// `notes` is a textarea rendered into a body, so tab and newline are fine
+// there; every other C0 control character (including the null byte) and DEL
+// are still rejected.
+const CONTROL_CHARS = /[\x00-\x1F\x7F]/;
+const NOTES_CONTROL_CHARS = /[\x00-\x08\x0B-\x1F\x7F]/;
 
 const REQUIRED: (keyof QuoteSubmission)[] = [
   'mode', 'origin', 'destination', 'cargo', 'name', 'company', 'email', 'phone',
@@ -81,6 +92,13 @@ export function validateQuote(input: unknown): ValidationResult {
 
   for (const [key, value] of Object.entries(data)) {
     if (value.length > MAX_LENGTH) errors[key] = 'This field is too long.';
+  }
+
+  for (const [key, value] of Object.entries(data)) {
+    const pattern = key === 'notes' ? NOTES_CONTROL_CHARS : CONTROL_CHARS;
+    if (pattern.test(value)) {
+      errors[key] = 'This field contains invalid characters.';
+    }
   }
 
   return Object.keys(errors).length > 0 ? { ok: false, errors } : { ok: true, data };

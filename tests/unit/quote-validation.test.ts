@@ -66,6 +66,35 @@ describe('validateQuote', () => {
     const result = validateQuote({ ...valid, notes: '', commodity: '' });
     expect(result.ok).toBe(true);
   });
+
+  it('rejects a CRLF injection attempt in origin', () => {
+    const result = validateQuote({ ...valid, origin: 'Ningbo\r\nBcc: attacker@evil.com' });
+    expect(result.ok).toBe(false);
+    if (!result.ok) expect(result.errors.origin).toBeDefined();
+  });
+
+  it('rejects a CRLF injection attempt in company', () => {
+    const result = validateQuote({ ...valid, company: 'Doe Imports\r\nBcc: attacker@evil.com' });
+    expect(result.ok).toBe(false);
+    if (!result.ok) expect(result.errors.company).toBeDefined();
+  });
+
+  it('accepts a plain newline in notes, since it is a textarea rendered into a body', () => {
+    const result = validateQuote({ ...valid, notes: 'Line one\nLine two' });
+    expect(result.ok).toBe(true);
+  });
+
+  it('rejects a null byte in notes', () => {
+    const result = validateQuote({ ...valid, notes: 'Line one\x00Line two' });
+    expect(result.ok).toBe(false);
+    if (!result.ok) expect(result.errors.notes).toBeDefined();
+  });
+
+  it('rejects a double-dot domain in the email address', () => {
+    const result = validateQuote({ ...valid, email: 'a@b..com' });
+    expect(result.ok).toBe(false);
+    if (!result.ok) expect(result.errors.email).toBeDefined();
+  });
 });
 
 describe('formatQuoteSubject', () => {
