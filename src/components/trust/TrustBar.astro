@@ -1,0 +1,22 @@
+---
+import { SITE } from '../../config/site';
+
+const items = [
+  SITE.credentials.nvocc ? 'Licensed NVOCC' : null,
+  SITE.credentials.fmcNumber ? `FMC License ${SITE.credentials.fmcNumber}` : null,
+  SITE.credentials.iataNumber ? `IATA ${SITE.credentials.iataNumber}` : 'IATA Member',
+  SITE.credentials.ctpatCertified ? 'C-TPAT Certified' : null,
+].filter((v): v is string => v !== null);
+---
+{items.length > 0 && (
+  <section aria-label="Certifications and licenses" class="bg-navy-800/40 border-y border-white/10">
+    <ul class="container-gg flex flex-wrap items-center justify-center gap-x-8 gap-y-3 py-5">
+      {items.map((item) => (
+        <li class="flex items-center gap-2 font-display uppercase tracking-[0.08em] text-xs md:text-sm text-slate-300">
+          <span class="text-amber-400" aria-hidden="true">&#10003;</span>
+          {item}
+        </li>
+      ))}
+    </ul>
+  </section>
+)}
