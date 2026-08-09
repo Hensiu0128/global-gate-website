@@ -153,6 +153,28 @@ const labelClass = 'block text-slate-300 text-sm font-semibold mb-2 tracking-wid
           return;
         }
 
+        // 400 means validation failed, not delivery failed — there is no fallback
+        // phone/email in this body, and showing one anyway hides what the visitor
+        // actually needs to fix. List the real errors instead, via textContent
+        // (never innerHTML) since these strings originate from the response body.
+        if (res.status === 400 && body.errors) {
+          const list = document.createElement('ul');
+          list.className = 'text-sm text-red-200 list-disc pl-5 space-y-1';
+          for (const message of Object.values(body.errors)) {
+            const li = document.createElement('li');
+            li.textContent = String(message);
+            list.appendChild(li);
+          }
+          const box = document.createElement('div');
+          box.className = 'border border-red-400/40 bg-red-500/10 rounded-xl p-5';
+          const heading = document.createElement('p');
+          heading.className = 'font-semibold mb-2 text-red-200';
+          heading.textContent = 'Please check these fields:';
+          box.append(heading, list);
+          status.replaceChildren(box);
+          return;
+        }
+
         // Never claim success we did not earn.
         const fallback = body.fallback ?? {};
         status.innerHTML =

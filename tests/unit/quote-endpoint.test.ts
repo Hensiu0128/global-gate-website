@@ -20,6 +20,15 @@ function post(body: unknown, headers: Record<string, string> = {}) {
   });
 }
 
+/** A no-JS <form> submission: x-www-form-urlencoded body, string values only. */
+function postForm(body: Record<string, string>) {
+  return new Request('https://global-gate.us/api/quote', {
+    method: 'POST',
+    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(body).toString(),
+  });
+}
+
 beforeEach(() => {
   sendMock.mockReset();
   process.env.RESEND_API_KEY = 'test-key';
@@ -107,6 +116,49 @@ describe('POST /api/quote', () => {
     const { POST } = await import('../../src/pages/api/quote');
     const res = await POST({ request: post(valid) } as any);
     expect(res.status).toBe(502);
+    expect(sendMock).not.toHaveBeenCalled();
+  });
+});
+
+// QuoteForm posts natively (no JS) as application/x-www-form-urlencoded. The
+// endpoint must accept that encoding too, and — since a browser following a
+// form POST needs to land on a real page, not a JSON blob — respond with a
+// 303 redirect to a /quote?... query flag instead of a JSON body.
+describe('POST /api/quote — native (no-JS) form submission', () => {
+  it('redirects to /quote?sent=1 only after the email is accepted', async () => {
+    sendMock.mockResolvedValue({ data: { id: 'abc' }, error: null });
+    const { POST } = await import('../../src/pages/api/quote');
+    const res = await POST({ request: postForm(valid) } as any);
+    expect(res.status).toBe(303);
+    expect(res.headers.get('Location')).toBe('/quote?sent=1');
+    expect(sendMock).toHaveBeenCalledOnce();
+  });
+
+  it('redirects to /quote?invalid=1 on a validation failure and never sends', async () => {
+    const { POST } = await import('../../src/pages/api/quote');
+    const res = await POST({ request: postForm({ ...valid, email: 'bad' }) } as any);
+    expect(res.status).toBe(303);
+    expect(res.headers.get('Location')).toBe('/quote?invalid=1');
+    expect(sendMock).not.toHaveBeenCalled();
+  });
+
+  it('redirects to /quote?error=1 — never ?sent=1 — when delivery fails (D1 on the no-JS path)', async () => {
+    sendMock.mockResolvedValue({ data: null, error: { message: 'domain not verified' } });
+    const { POST } = await import('../../src/pages/api/quote');
+    const res = await POST({ request: postForm(valid) } as any);
+    expect(res.status).toBe(303);
+    const location = res.headers.get('Location');
+    expect(location).toBe('/quote?error=1');
+    expect(location).not.toBe('/quote?sent=1');
+  });
+
+  it('silently redirects to /quote?sent=1 for a honeypot submission without sending', async () => {
+    const { POST } = await import('../../src/pages/api/quote');
+    const res = await POST({
+      request: postForm({ ...valid, company_website: 'http://spam.example' }),
+    } as any);
+    expect(res.status).toBe(303);
+    expect(res.headers.get('Location')).toBe('/quote?sent=1');
     expect(sendMock).not.toHaveBeenCalled();
   });
 });

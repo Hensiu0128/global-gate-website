@@ -12,6 +12,11 @@ function json(body: unknown, status: number): Response {
   });
 }
 
+/** Native form posts get a 303 so the browser lands on a real page, not raw JSON. */
+function seeOther(location: string): Response {
+  return new Response(null, { status: 303, headers: { Location: location } });
+}
+
 function escapeHtml(value: string): string {
   return value
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -44,25 +49,41 @@ function buildEmailBody(data: QuoteSubmission): string {
 }
 
 export const POST: APIRoute = async ({ request }) => {
+  // Content negotiation: QuoteForm posts natively as x-www-form-urlencoded
+  // when JavaScript is unavailable, and as JSON via fetch when it is. A
+  // browser following a native form POST must land on a real page — not a
+  // JSON blob — so every exit point below branches on `isFormPost` between
+  // a JSON response and a 303 redirect to a `/quote?...` query flag.
+  const contentType = request.headers.get('content-type') ?? '';
+  const isFormPost =
+    contentType.includes('application/x-www-form-urlencoded') ||
+    contentType.includes('multipart/form-data');
+
   let payload: unknown;
   try {
-    payload = await request.json();
+    payload = isFormPost
+      ? Object.fromEntries((await request.formData()).entries())
+      : await request.json();
   } catch {
-    return json({ ok: false, errors: { form: 'Invalid request body.' } }, 400);
+    return isFormPost
+      ? seeOther('/quote?error=1')
+      : json({ ok: false, errors: { form: 'Invalid request body.' } }, 400);
   }
 
   // Honeypot: a real browser leaves this hidden field empty. Bots fill everything.
-  // Respond 200 so the bot believes it succeeded and does not retry — but do NOT
-  // send an email. This is the one deliberate case where a 200 does not mean
-  // delivery happened; every other path in this file must never do that (see D1).
+  // Respond success so the bot believes it succeeded and does not retry — but do NOT
+  // send an email. This is the one deliberate case where a success response does not
+  // mean delivery happened; every other path in this file must never do that (see D1).
   const honeypot = (payload as Record<string, unknown>)?.company_website;
   if (typeof honeypot === 'string' && honeypot.trim() !== '') {
-    return json({ ok: true }, 200);
+    return isFormPost ? seeOther('/quote?sent=1') : json({ ok: true }, 200);
   }
 
   const result = validateQuote(payload);
   if (!result.ok) {
-    return json({ ok: false, errors: result.errors }, 400);
+    return isFormPost
+      ? seeOther('/quote?invalid=1')
+      : json({ ok: false, errors: result.errors }, 400);
   }
 
   const apiKey = process.env.RESEND_API_KEY;
@@ -70,18 +91,20 @@ export const POST: APIRoute = async ({ request }) => {
   const to = process.env.QUOTE_TO_EMAIL ?? SITE.email;
 
   const failure = () =>
-    json(
-      {
-        ok: false,
-        message:
-          'We could not send your request automatically. Please email or call us and we will respond right away.',
-        fallback: { email: SITE.email, phone: SITE.phones[0].number },
-      },
-      502
-    );
+    isFormPost
+      ? seeOther('/quote?error=1')
+      : json(
+          {
+            ok: false,
+            message:
+              'We could not send your request automatically. Please email or call us and we will respond right away.',
+            fallback: { email: SITE.email, phone: SITE.phones[0].number },
+          },
+          502
+        );
 
   // Missing configuration (e.g. a fresh deploy before env vars are set) must fail
-  // the same way a delivery error does — never fall through to a false 200.
+  // the same way a delivery error does — never fall through to a false success.
   if (!apiKey || !from) return failure();
 
   try {
@@ -94,7 +117,7 @@ export const POST: APIRoute = async ({ request }) => {
       html: buildEmailBody(result.data),
     });
     if (error) return failure();
-    return json({ ok: true }, 200);
+    return isFormPost ? seeOther('/quote?sent=1') : json({ ok: true }, 200);
   } catch {
     return failure();
   }
