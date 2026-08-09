@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../config/site';
+import { formatAddressOneLine } from '../lib/format';
+
+const updated = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+<BaseLayout
+  title="Terms of Use"
+  description="Terms governing the use of the Global Gate Logistics website, including quotes, service terms, and limitations."
+  pathname="/terms"
+>
+  <div class="bg-navy-900 py-12">
+    <div class="container-gg">
+      <h1 class="text-white" style="font-size:clamp(2rem,5vw,3rem)">Terms of Use</h1>
+      <p class="text-slate-400 mt-3">Last updated {updated}</p>
+    </div>
+  </div>
+  <section class="bg-white py-14">
+    <div class="container-gg max-w-3xl space-y-6 text-slate-600 leading-relaxed">
+      <h2 class="font-display text-navy-900 text-2xl font-bold">Website use</h2>
+      <p>
+        This website is operated by {SITE.legalName}, {formatAddressOneLine(SITE.address)}. By using
+        it you agree to these terms. Content is provided for general information about our services.
+      </p>
+
+      <h2 class="font-display text-navy-900 text-2xl font-bold">Quotes and estimates</h2>
+      <p>
+        Rates, transit times, and other figures on this site are indicative and are not an offer.
+        Any quotation we issue is subject to the details you supply being accurate, to space and
+        equipment availability, and to the terms stated on the quotation itself.
+      </p>
+
+      <h2 class="font-display text-navy-900 text-2xl font-bold">Service terms</h2>
+      <p>
+        Freight forwarding, NVOCC, customs brokerage, warehousing, and trucking services are
+        governed by the terms and conditions issued with the relevant booking, bill of lading, air
+        waybill, or warehouse receipt, and by applicable United States law and regulation.
+      </p>
+
+      <h2 class="font-display text-navy-900 text-2xl font-bold">Accuracy</h2>
+      <p>
+        Customs requirements, transit times, and regulations change. While we keep this site current,
+        we do not warrant that all information is complete or up to date at the time you read it.
+        Contact us at <a class="text-amber-600 underline" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+        to confirm anything you intend to rely on.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

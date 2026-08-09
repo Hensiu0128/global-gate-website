@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Page Not Found"
+  description="The page you are looking for does not exist. Browse our freight forwarding services or request a quote."
+  pathname="/404"
+  noindex
+>
+  <section class="bg-navy-900 min-h-[60vh] flex items-center">
+    <div class="container-gg py-20 text-center">
+      <p class="font-display text-amber-400 text-6xl md:text-8xl font-bold">404</p>
+      <h1 class="text-white mt-4 mb-6" style="font-size:clamp(2rem,5vw,3rem)">Page not found</h1>
+      <p class="text-slate-400 text-lg max-w-md mx-auto mb-10">
+        That page has moved or never existed. Here's where most people are headed:
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="/" class="btn-outline px-7 py-3 rounded">Home</a>
+        <a href="/services" class="btn-outline px-7 py-3 rounded">Services</a>
+        <a href="/quote" class="btn-amber px-7 py-3 rounded">Get a Quote</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

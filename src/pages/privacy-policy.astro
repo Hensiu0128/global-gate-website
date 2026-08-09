@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../config/site';
+import { formatAddressOneLine } from '../lib/format';
+
+const updated = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+<BaseLayout
+  title="Privacy Policy"
+  description="How Global Gate Logistics Inc collects, uses, and protects the information you submit through this website."
+  pathname="/privacy-policy"
+>
+  <div class="bg-navy-900 py-12">
+    <div class="container-gg">
+      <h1 class="text-white" style="font-size:clamp(2rem,5vw,3rem)">Privacy Policy</h1>
+      <p class="text-slate-400 mt-3">Last updated {updated}</p>
+    </div>
+  </div>
+  <section class="bg-white py-14">
+    <div class="container-gg max-w-3xl space-y-6 text-slate-600 leading-relaxed">
+      <h2 class="font-display text-navy-900 text-2xl font-bold">Who we are</h2>
+      <p>
+        {SITE.legalName}, {formatAddressOneLine(SITE.address)}, operates this website. Questions about
+        this policy can be sent to <a class="text-amber-600 underline" href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+      </p>
+
+      <h2 class="font-display text-navy-900 text-2xl font-bold">What we collect</h2>
+      <p>
+        When you submit a quote request we collect the name, company, email address, phone number,
+        and shipment details you provide. We also collect standard analytics data such as pages
+        viewed and approximate location, through Google Analytics.
+      </p>
+
+      <h2 class="font-display text-navy-900 text-2xl font-bold">How we use it</h2>
+      <p>
+        Quote request information is used solely to prepare and send your rate and to follow up on
+        your enquiry. Analytics data is used to understand which pages are useful and to improve
+        the site. We do not sell your information.
+      </p>
+
+      <h2 class="font-display text-navy-900 text-2xl font-bold">Who we share it with</h2>
+      <p>
+        We share information only with service providers who help us operate: our email delivery
+        provider, our website host, and our analytics provider. We may also disclose information
+        where required by law or by customs and transport regulations.
+      </p>
+
+      <h2 class="font-display text-navy-900 text-2xl font-bold">Your choices</h2>
+      <p>
+        You can ask us to correct or delete the information you submitted by emailing
+        <a class="text-amber-600 underline" href={`mailto:${SITE.email}`}>{SITE.email}</a>. You can
+        block analytics cookies through your browser settings at any time.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
