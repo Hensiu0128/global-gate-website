@@ -35,3 +35,17 @@ describe.each([['privacy-policy', Privacy], ['terms', Terms]])('%s', (_name, Com
     expect(html).toContain('Op01@global-gate.us');
   });
 });
+
+describe.each([['privacy-policy', Privacy], ['terms', Terms]])('%s indexability', (_name, Component) => {
+  it('is indexable — legal pages must not carry noindex', async () => {
+    const html = await render(Component);
+    expect(html).not.toContain('noindex');
+  });
+});
+
+it('does not claim analytics or tracking this site does not run', async () => {
+  const html = await render(Privacy);
+  for (const term of ['Google Analytics', 'analytics provider', 'analytics cookies']) {
+    expect(html, `privacy policy claims "${term}" but no analytics ship in this build`).not.toContain(term);
+  }
+});
