@@ -77,6 +77,13 @@ Still needed:
   banner and service pages are placeholders, not real photos of this company's
   warehouse, staff, or operations
 
+## Replacing images
+
+Images can be swapped by overwriting the file in `public/images/` with the same
+filename (e.g. replacing `service-warehouse.webp` with a real photo saved under
+that same name). The site is configured so a replaced image reaches visitors
+within about an hour, rather than being cached for a year.
+
 ## Environment variables (set in Vercel)
 
 | Variable | Purpose |
