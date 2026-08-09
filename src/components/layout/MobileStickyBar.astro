@@ -1,3 +1,19 @@
 ---
+import { SITE } from '../../config/site';
+import { telHref, formatPhone } from '../../lib/format';
+const primary = SITE.phones[0];
 ---
-<div></div>
+<div class="md:hidden fixed bottom-0 inset-x-0 z-50 grid grid-cols-2 border-t border-white/10 bg-navy-900">
+  <a
+    href={telHref(primary.number)}
+    class="flex items-center justify-center gap-2 py-4 font-display font-bold uppercase tracking-[0.08em] text-sm text-white"
+  >
+    <span aria-hidden="true">&#9742;</span> Call {formatPhone(primary.number)}
+  </a>
+  <a
+    href="/quote"
+    class="flex items-center justify-center py-4 font-display font-bold uppercase tracking-[0.08em] text-sm bg-amber-500 text-navy-900"
+  >
+    Get a Quote
+  </a>
+</div>

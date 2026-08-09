@@ -1,0 +1,15 @@
+---
+import { NAV_LINKS } from '../../config/site';
+const { pathname } = Astro.url;
+---
+<nav aria-label="Primary" class="hidden lg:flex items-center gap-8">
+  {NAV_LINKS.map((link) => (
+    <a
+      href={link.href}
+      aria-current={pathname.startsWith(link.href) ? 'page' : undefined}
+      class="font-display uppercase tracking-[0.08em] text-sm font-medium text-slate-300 hover:text-amber-400 transition-colors"
+    >
+      {link.label}
+    </a>
+  ))}
+</nav>
