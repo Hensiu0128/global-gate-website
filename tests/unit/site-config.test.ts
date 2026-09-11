@@ -44,3 +44,13 @@ describe('SITE config', () => {
     }
   });
 });
+
+describe('wcaMember', () => {
+  it('is a confirmed boolean fact, not a placeholder', () => {
+    expect(typeof SITE.credentials.wcaMember).toBe('boolean');
+  });
+
+  it('is true — the owner confirmed WCA membership on 2026-09-11', () => {
+    expect(SITE.credentials.wcaMember).toBe(true);
+  });
+});

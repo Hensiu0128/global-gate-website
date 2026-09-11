@@ -24,6 +24,7 @@ export interface Credentials {
   iataNumber: string | null;  // spec F2
   ctpatCertified: boolean;    // spec F3
   nvocc: boolean;
+  wcaMember: boolean;         // confirmed by owner 2026-09-11 — WCA (World Cargo Alliance)
 }
 
 export interface Social {
@@ -79,6 +80,7 @@ export const SITE: SiteConfig = {
     iataNumber: null,
     ctpatCertified: true,
     nvocc: true,
+    wcaMember: true,
   },
   social: {
     facebook: null,
