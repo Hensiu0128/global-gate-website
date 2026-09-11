@@ -47,7 +47,7 @@ export const PARTNER_AUDIENCES: PartnerAudience[] = [
           'Agents can email the operations team directly or submit the quote form on this website. Rate requests are answered within 24 business hours.',
       },
     ],
-    metaTitle: 'Overseas Agent Partnership — US Destination Partner',
+    metaTitle: 'Overseas Agent Partnership',
     metaDescription:
       'A US destination partner for overseas freight forwarders: in-house ocean, air, customs, and warehousing, WCA membership, and 24-hour rate turnaround.',
   },
