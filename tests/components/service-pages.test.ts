@@ -78,4 +78,14 @@ describe.each(SERVICES.map((s) => [s.slug, s.name]))('Service page: %s', (slug, 
     const html = await renderDetail(slug);
     expect(html).toContain('href="/services"');
   });
+
+  it('renders any cross-links as real anchors with their link text', async () => {
+    const service = SERVICES.find((s) => s.slug === slug)!;
+    if (!service.crossLinks || service.crossLinks.length === 0) return;
+    const html = await renderDetail(slug);
+    for (const link of service.crossLinks) {
+      expect(html).toContain(`href="${link.href}"`);
+      expect(html).toContain(link.text);
+    }
+  });
 });

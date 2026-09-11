@@ -12,6 +12,7 @@ export interface Service {
   image: string | null;
   metaTitle: string;
   metaDescription: string;
+  crossLinks?: { text: string; href: string }[];
 }
 
 export const SERVICES: Service[] = [
