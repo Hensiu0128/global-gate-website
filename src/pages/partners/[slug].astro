@@ -1,0 +1,16 @@
+---
+import PartnerLayout from '../../layouts/PartnerLayout.astro';
+import { PARTNER_AUDIENCES } from '../../data/partners-audience';
+import type { PartnerAudience } from '../../data/partners-audience';
+
+export function getStaticPaths() {
+  return PARTNER_AUDIENCES.map((partner) => ({
+    params: { slug: partner.slug },
+    props: { partner },
+  }));
+}
+
+interface Props { partner: PartnerAudience; }
+const { partner } = Astro.props;
+---
+<PartnerLayout {partner} />

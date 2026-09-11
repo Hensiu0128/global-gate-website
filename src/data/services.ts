@@ -270,6 +270,7 @@ export const SERVICES: Service[] = [
       },
     ],
     image: null,
+    crossLinks: [{ text: 'Read our overseas agent partnership page', href: '/partners/agents' }],
     metaTitle: 'Overseas Agent Network & US Partner',
     metaDescription:
       'Global Gate Logistics is your US destination partner for ocean, air, customs, and warehousing, with 24-hour rate turnaround for overseas forwarders.',
