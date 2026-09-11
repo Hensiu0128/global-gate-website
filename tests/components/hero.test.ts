@@ -9,11 +9,17 @@ async function render() {
 }
 
 describe('Hero', () => {
-  it('leads with the route-specific headline, not a generic platitude', async () => {
+  it('leads with a specific, lane-agnostic headline, not a generic platitude', async () => {
     const html = await render();
-    expect(html).toContain('ASIA TO AMERICA');
+    expect(html).toContain('IMPORT. EXPORT.');
     expect(html).toContain('DOOR TO DOOR');
     expect(html).not.toContain('YOU CAN TRUST');
+    expect(html).not.toContain('ASIA TO AMERICA');
+  });
+
+  it('names the WCA membership in the credentials badge', async () => {
+    const html = await render();
+    expect(html).toContain('WCA Member');
   });
 
   it('renders exactly one h1', async () => {

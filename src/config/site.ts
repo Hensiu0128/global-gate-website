@@ -56,7 +56,7 @@ export const SITE: SiteConfig = {
   legalName: 'Global Gate Logistics Inc',
   tagline: 'International Freight Forwarder · NVOCC · IATA Member',
   description:
-    'Global Gate Logistics is a US international freight forwarder and NVOCC specializing in Asia–America cargo. Ocean FCL & LCL, air freight, customs clearance, JFK warehousing, and nationwide trucking handled in-house.',
+    'Global Gate Logistics is a US international freight forwarder and NVOCC moving full container load and air cargo for any origin or destination. Ocean FCL & LCL, air freight, customs clearance, JFK warehousing, and nationwide trucking handled in-house.',
   url: 'https://global-gate.us',
   email: 'Op01@global-gate.us',
   phones: [

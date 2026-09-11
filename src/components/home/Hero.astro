@@ -5,9 +5,10 @@ import { SITE } from '../../config/site';
 import { telHref, formatPhone } from '../../lib/format';
 
 const primary = SITE.phones[0];
-const badgeText = SITE.credentials.fmcNumber
-  ? `NVOCC & IATA Member · FMC ${SITE.credentials.fmcNumber}`
-  : 'NVOCC & IATA Member';
+const badgeParts = ['NVOCC & IATA Member'];
+if (SITE.credentials.wcaMember) badgeParts.push('WCA Member');
+if (SITE.credentials.fmcNumber) badgeParts.push(`FMC ${SITE.credentials.fmcNumber}`);
+const badgeText = badgeParts.join(' · ');
 ---
 <section class="relative min-h-[85vh] flex items-center overflow-hidden">
   <img
@@ -28,7 +29,7 @@ const badgeText = SITE.credentials.fmcNumber
     </p>
 
     <h1 class="text-white mb-6">
-      ASIA TO AMERICA,<br />
+      IMPORT. EXPORT.<br />
       <span class="text-amber-400">DOOR TO DOOR.</span>
     </h1>
 

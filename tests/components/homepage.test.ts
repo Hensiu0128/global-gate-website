@@ -39,6 +39,6 @@ describe('Homepage', () => {
   it('contains the full company description as crawlable text', async () => {
     const html = await render();
     expect(html).toContain('NVOCC');
-    expect(html).toContain('Asia');
+    expect(html).toContain('any origin');
   });
 });
