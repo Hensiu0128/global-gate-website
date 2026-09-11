@@ -30,5 +30,8 @@
     "linkedom": "^0.18.13",
     "tailwindcss": "^4.3.3",
     "vitest": "^4.1.10"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true
   }
 }
