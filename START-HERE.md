@@ -3,15 +3,20 @@
 This folder contains the complete source code for the **Global Gate Logistics** website
 (`global-gate.us`). The site is **built and tested, but not yet live on the internet**.
 
-## Read these two files, in this order
+## Read these files, in this order
 
 1. **[docs/HANDOFF.md](docs/HANDOFF.md)** — the handoff guide. What exists, what's missing,
    how to put the site live, and the two remaining work packages (AI search visibility, and
    analytics). **Start here.**
-2. **[README.md](README.md)** — day-to-day maintenance: the commands, and which file to edit
+2. **[docs/PROMPTS.md](docs/PROMPTS.md)** — how to work with Claude Code on this project:
+   ready-made prompts for each task, and how to check the work. Read this before your first
+   session.
+3. **[README.md](README.md)** — day-to-day maintenance: the commands, and which file to edit
    to change any piece of content on the site.
 
-Everything else in this folder is referenced from those two.
+Everything else in this folder is referenced from those three. (`CLAUDE.md` is read
+automatically by Claude Code at the start of every session — you never need to open it
+yourself, but it's why you don't have to re-explain the project each time.)
 
 ## What this folder is
 
