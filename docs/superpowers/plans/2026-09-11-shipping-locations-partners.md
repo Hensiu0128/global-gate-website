@@ -1292,24 +1292,20 @@ git commit -m "feat: publish priority article and cross-link it from the agent p
 
 - [ ] **Step 1: Write the failing GEO test**
 
-In `tests/build/geo-files.test.ts`, add (near the existing service-slug loop):
+`tests/build/geo-files.test.ts` already has a `describe('llms.txt', () => { const llms =
+readFileSync('public/llms.txt', 'utf8'); ... })` block. Add two new `it()` cases inside that
+existing block (reuse its `llms` constant — do not create a new describe block or re-read the
+file):
 
 ```ts
-describe('llms.txt Phase 1 page coverage', () => {
-  const llmsTxt = readFileSync('public/llms.txt', 'utf8');
-
   it('lists the blog', () => {
-    expect(llmsTxt).toContain('/blog');
+    expect(llms).toContain('/blog');
   });
 
   it('lists the overseas-agent partner page', () => {
-    expect(llmsTxt).toContain('/partners/agents');
+    expect(llms).toContain('/partners/agents');
   });
-});
 ```
-
-(match the exact `readFileSync`/import style already used elsewhere in this file — if it already
-reads `llms.txt` into a shared variable near the top, reuse that instead of re-reading it.)
 
 - [ ] **Step 2: Run test to verify it fails**
 
@@ -1329,15 +1325,21 @@ Partner Program (Overseas Agents): https://global-gate.us/partners/agents
 
 - [ ] **Step 4: Update the two build-output whitelists**
 
-In `tests/build/seo-invariants.test.ts`, add to the `expected` array:
+In `tests/build/seo-invariants.test.ts`, the `expected` array holds full built-file paths
+(`'dist/client/<route>/index.html'`), not bare routes — match that exact format. Add:
 ```ts
-  '/blog',
-  '/blog/choosing-a-us-freight-forwarding-partner',
-  '/partners/agents',
+      'dist/client/blog/index.html',
+      'dist/client/blog/choosing-a-us-freight-forwarding-partner/index.html',
+      'dist/client/partners/agents/index.html',
 ```
 
-In `tests/build/sitemap.test.ts`, add the same three paths to its indexable-URL `toContain`
-checks.
+In `tests/build/sitemap.test.ts`, the "includes the indexable pages" test checks full URLs with
+a `</loc>` suffix — match that exact format. Add to that `it()`:
+```ts
+    expect(sitemap).toContain('https://global-gate.us/blog</loc>');
+    expect(sitemap).toContain('https://global-gate.us/blog/choosing-a-us-freight-forwarding-partner</loc>');
+    expect(sitemap).toContain('https://global-gate.us/partners/agents</loc>');
+```
 
 - [ ] **Step 5: Run the full build-output suite**
 
@@ -1589,7 +1591,7 @@ export interface TradeLane {
 
 export const TRADE_LANES: TradeLane[] = [
   {
-    slug: 'china-usa',
+    slug: 'china-to-usa',
     name: 'China to USA Freight',
     country: 'China',
     tagline: 'Ocean FCL & LCL, Air Freight',
@@ -1629,7 +1631,7 @@ export const TRADE_LANES: TradeLane[] = [
       'Ocean FCL & LCL and air freight from China to the USA: direct carrier contracts, in-house customs and ISF filing, and JFK-area warehousing.',
   },
   {
-    slug: 'vietnam-usa',
+    slug: 'vietnam-to-usa',
     name: 'Vietnam to USA Freight',
     country: 'Vietnam',
     tagline: 'Ocean FCL & LCL, Air Freight',
@@ -1847,7 +1849,7 @@ In `src/components/layout/Footer.astro`, add a new array near `serviceLinks`:
 const tradeLaneLinks = [
   ['All Trade Lanes', '/shipping/asia-to-usa'],
   ['China – USA', '/shipping/china-to-usa'],
-  ['Vietnam – USA', '/shipping/vietnam-usa'],
+  ['Vietnam – USA', '/shipping/vietnam-to-usa'],
 ];
 ```
 
@@ -1874,7 +1876,7 @@ Add to `tests/components/footer.test.ts`:
     const html = await render();
     expect(html).toContain('/shipping/asia-to-usa');
     expect(html).toContain('/shipping/china-to-usa');
-    expect(html).toContain('/shipping/vietnam-usa');
+    expect(html).toContain('/shipping/vietnam-to-usa');
   });
 ```
 
@@ -2320,24 +2322,24 @@ git commit -m "feat: add broker & 3PL partner page"
 
 - [ ] **Step 1: Write the failing test**
 
-Extend the `describe('llms.txt Phase 1 page coverage', ...)` block added in Task 7 (rename it to
-drop "Phase 1" now that it covers everything, or add a sibling block — either is fine, just avoid
-two blocks with the same name) with:
+Add more `it()` cases inside the same existing `describe('llms.txt', ...)` block in
+`tests/build/geo-files.test.ts` that Task 7 already added two cases to (reuse the `llms`
+constant):
 
 ```ts
   it('lists the trade-lane hub and both lane pages', () => {
-    expect(llmsTxt).toContain('/shipping/asia-to-usa');
-    expect(llmsTxt).toContain('/shipping/china-to-usa');
-    expect(llmsTxt).toContain('/shipping/vietnam-usa');
+    expect(llms).toContain('/shipping/asia-to-usa');
+    expect(llms).toContain('/shipping/china-to-usa');
+    expect(llms).toContain('/shipping/vietnam-to-usa');
   });
 
   it('lists both location pages', () => {
-    expect(llmsTxt).toContain('/locations/jfk-freight-forwarder');
-    expect(llmsTxt).toContain('/locations/new-york-freight-forwarder');
+    expect(llms).toContain('/locations/jfk-freight-forwarder');
+    expect(llms).toContain('/locations/new-york-freight-forwarder');
   });
 
   it('lists the brokers partner page', () => {
-    expect(llmsTxt).toContain('/partners/brokers');
+    expect(llms).toContain('/partners/brokers');
   });
 ```
 
@@ -2353,17 +2355,26 @@ matching the file's existing format.
 
 - [ ] **Step 4: Update the two build-output whitelists**
 
-In `tests/build/seo-invariants.test.ts`, add to `expected`:
+In `tests/build/seo-invariants.test.ts`, the `expected` array holds full built-file paths — add:
 ```ts
-  '/shipping/asia-to-usa',
-  '/shipping/china-to-usa',
-  '/shipping/vietnam-usa',
-  '/locations/jfk-freight-forwarder',
-  '/locations/new-york-freight-forwarder',
-  '/partners/brokers',
+      'dist/client/shipping/asia-to-usa/index.html',
+      'dist/client/shipping/china-to-usa/index.html',
+      'dist/client/shipping/vietnam-to-usa/index.html',
+      'dist/client/locations/jfk-freight-forwarder/index.html',
+      'dist/client/locations/new-york-freight-forwarder/index.html',
+      'dist/client/partners/brokers/index.html',
 ```
 
-In `tests/build/sitemap.test.ts`, add the same six paths.
+In `tests/build/sitemap.test.ts`, the "includes the indexable pages" test checks full URLs with
+a `</loc>` suffix — add to that `it()`:
+```ts
+    expect(sitemap).toContain('https://global-gate.us/shipping/asia-to-usa</loc>');
+    expect(sitemap).toContain('https://global-gate.us/shipping/china-to-usa</loc>');
+    expect(sitemap).toContain('https://global-gate.us/shipping/vietnam-to-usa</loc>');
+    expect(sitemap).toContain('https://global-gate.us/locations/jfk-freight-forwarder</loc>');
+    expect(sitemap).toContain('https://global-gate.us/locations/new-york-freight-forwarder</loc>');
+    expect(sitemap).toContain('https://global-gate.us/partners/brokers</loc>');
+```
 
 - [ ] **Step 5: Run the full build-output suite**
 
@@ -2401,7 +2412,7 @@ Expected: PASS.
 - [ ] **Step 4: Manual JS-disabled check**
 
 With the dev server running, disable JavaScript and load: `/shipping/asia-to-usa`,
-`/shipping/china-to-usa`, `/shipping/vietnam-usa`, `/locations/jfk-freight-forwarder`,
+`/shipping/china-to-usa`, `/shipping/vietnam-to-usa`, `/locations/jfk-freight-forwarder`,
 `/locations/new-york-freight-forwarder`, `/partners/brokers`. Confirm all text, FAQ answers, and
 navigation (including the new footer Trade Lanes column and header Trade Lanes link) render
 fully without JavaScript.
