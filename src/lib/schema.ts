@@ -86,6 +86,26 @@ export function serviceSchema(input: { name: string; description: string; url: s
   };
 }
 
+export function articleSchema(input: {
+  title: string;
+  description: string;
+  url: string;
+  pubDate: Date;
+  dateModified: Date;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: input.title,
+    description: input.description,
+    url: input.url,
+    datePublished: input.pubDate.toISOString(),
+    dateModified: input.dateModified.toISOString(),
+    author: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+    publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+  };
+}
+
 export function faqSchema(faqs: { question: string; answer: string }[]) {
   return {
     '@context': 'https://schema.org',

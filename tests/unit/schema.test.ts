@@ -5,6 +5,7 @@ import {
   serviceSchema,
   faqSchema,
   breadcrumbSchema,
+  articleSchema,
 } from '../../src/lib/schema';
 
 describe('organizationSchema', () => {
@@ -64,5 +65,22 @@ describe('serviceSchema', () => {
     expect(s['@type']).toBe('Service');
     expect(s.provider['@type']).toBe('Organization');
     expect(s.provider.name).toBe('Global Gate Logistics');
+  });
+});
+
+describe('articleSchema', () => {
+  it('is a valid schema.org Article with both dates', () => {
+    const s = articleSchema({
+      title: 'Test Article',
+      description: 'A test description.',
+      url: 'https://global-gate.us/blog/test-article',
+      pubDate: new Date('2026-09-01'),
+      dateModified: new Date('2026-09-05'),
+    }) as Record<string, any>;
+    expect(s['@type']).toBe('Article');
+    expect(s.headline).toBe('Test Article');
+    expect(s.datePublished).toBe('2026-09-01T00:00:00.000Z');
+    expect(s.dateModified).toBe('2026-09-05T00:00:00.000Z');
+    expect(s.author.name).toBe('Global Gate Logistics');
   });
 });

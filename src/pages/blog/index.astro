@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+import TrustBar from '../../components/trust/TrustBar.astro';
+import CTABand from '../../components/ui/CTABand.astro';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const breadcrumbs = [{ name: 'Home', href: '/' }, { name: 'Blog', href: '/blog' }];
+const description =
+  'Answers to real questions about ocean and air freight, customs clearance, and choosing a US freight forwarding partner.';
+---
+<BaseLayout title="Freight Forwarding Blog" {description} pathname="/blog" {breadcrumbs}>
+  <div class="bg-navy-900">
+    <Breadcrumbs trail={breadcrumbs} />
+    <div class="container-gg pb-12 pt-4">
+      <h1 class="text-white mb-4" style="font-size:clamp(2.25rem,5.5vw,3.75rem)">Blog</h1>
+      <p class="text-slate-300 max-w-2xl">{description}</p>
+    </div>
+  </div>
+  <TrustBar />
+  <div class="container-gg py-16">
+    <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {posts.map((post) => (
+        <li class="bg-white border border-slate-100 rounded-xl p-6 hover:border-amber-400 transition-colors">
+          <a href={`/blog/${post.id}`} class="block">
+            <span class="font-display text-navy-900 font-bold text-lg block mb-2">{post.data.title}</span>
+            <span class="text-slate-500 text-sm">{post.data.description}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+  <CTABand />
+</BaseLayout>

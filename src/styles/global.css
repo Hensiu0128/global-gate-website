@@ -73,3 +73,12 @@
   }
   .btn-outline:hover { color: var(--color-amber-400); border-color: var(--color-amber-400); }
 }
+
+.prose-gg h2 { font-weight: 700; color: #0A1628; font-size: 1.5rem; margin: 2.5rem 0 1rem; }
+.prose-gg h3 { font-weight: 700; color: #0A1628; font-size: 1.25rem; margin: 2rem 0 0.75rem; }
+.prose-gg p { color: #475569; line-height: 1.75; margin-bottom: 1.25rem; }
+.prose-gg table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; font-size: 0.95rem; }
+.prose-gg th, .prose-gg td { text-align: left; padding: 0.6rem 0.8rem; border-bottom: 1px solid #e2e8f0; }
+.prose-gg th { color: #0A1628; font-weight: 700; }
+.prose-gg ul { margin: 0 0 1.25rem 1.25rem; list-style: disc; color: #475569; }
+.prose-gg li { margin-bottom: 0.4rem; }
