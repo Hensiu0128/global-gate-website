@@ -1,8 +1,8 @@
 # Global Gate Logistics — Website Handoff
 
-**Repo:** this folder · **Branch:** `feat/website-rebuild` · **Merge base:** `1e7635d` · **Commits:** 33
+**Repo:** this folder · **Branch:** `feat/website-rebuild` · **Merge base:** `1e7635d` · **Commits:** 65
 **Target domain:** `https://global-gate.us` · **Status:** built and tested locally, **not yet deployed**
-**Handoff date:** 2026-09-11
+**Handoff date:** 2026-09-12 (updated — see §1 and §C6 for what changed since 2026-09-11)
 
 ---
 
@@ -24,13 +24,14 @@ Read §1 and §2 before you touch anything. The rest can be read as you need it.
 
 | | |
 |---|---|
-| Pages building | **17** (13 indexable + 404 + 3 noindex form-confirmation pages) |
-| Tests passing | **269** — 212 unit/component, 54 build-output, 3 end-to-end browser |
+| Pages building | **26** (22 indexable + 404 + 3 noindex form-confirmation pages) |
+| Tests passing | **342** — 278 unit/component, 61 build-output, 3 end-to-end browser |
 | Working tree | Clean, everything committed |
 | Git remote | **None configured** — the code exists only on this machine |
 | Deployed | **No.** No Vercel project, no DNS change, no Resend account |
 | Analytics | **None installed.** Zero tracking scripts ship today |
-| Final whole-branch review | **Not run.** Every individual task passed its own review; the one cross-cutting pass at the end was cancelled |
+| Final whole-branch review (Phase 1 plan) | **Not run.** Every individual task passed its own review; the one cross-cutting pass at the end was cancelled |
+| Final whole-plan review (trade-lanes/locations/partners plan) | **Run**, 2026-09-12. 5 findings fixed — see `.superpowers/sdd/2026-09-11-shipping-locations-partners/final-fix-report.md` |
 
 ### What was wrong with the old site, and what this build fixed
 
@@ -221,24 +222,28 @@ It costs about ten minutes: create the account, use **Import from Google Search 
 
 ### C6. Content that actually gets cited — the Phase 2 build
 
-Six service pages is enough to exist. It is not enough to be cited. AI engines quote pages that answer a *specific question* completely. The following were scoped but not built.
+Six service pages is enough to exist. It is not enough to be cited. AI engines quote pages that answer a *specific question* completely.
+
+**Done as of 2026-09-12:** the trade-lane pages (`/shipping/china-to-usa`, `/shipping/vietnam-to-usa`, plus a `/shipping` hub with real body copy — see `src/data/trade-lanes.ts`), the location pages (`/locations/jfk-freight-forwarder`, `/locations/new-york-freight-forwarder` — see `src/data/locations.ts`), the two partner-audience pages (`/partners/agents`, `/partners/brokers` — see `src/data/partners-audience.ts`), minimal blog plumbing (a content collection, index page, and detail template with `Article`/`FAQPage` schema — see `src/content/blog/` and `src/pages/blog/`), and blog article #7 below. All of these pages now cross-link to relevant services and to each other via a shared `src/components/ui/CrossLinks.astro` component.
+
+Originally 3 trade lanes were scoped; only 2 (China, Vietnam) were built, which was judged sufficient coverage for now — revisit only if a third lane becomes a real, confirmed business need, not as a default next step.
+
+**Not yet built:** 9 of the 10 scoped blog articles (only #7 exists). This is still substantial work — do not assume it is done because the surrounding plumbing and one article are.
 
 **Blog — 8–10 articles, answer-first, 1,200–2,000 words, each with an FAQ block and `Article` schema:**
 
-1. LCL vs FCL: which is cheaper for your shipment size?
-2. How long does customs clearance take at JFK?
-3. What documents do you need to import from China to the USA?
-4. What is an NVOCC, and why does it matter to your shipment?
-5. Ocean vs air freight: a real cost and transit comparison
-6. Understanding freight quotes: every charge explained
-7. How to choose a US freight forwarding partner (for overseas agents)
-8. Importing from Vietnam to the USA: a complete guide
-9. What C-TPAT certification means for your cargo
-10. Demurrage and detention: how to avoid the charges
+1. LCL vs FCL: which is cheaper for your shipment size? — *not built*
+2. How long does customs clearance take at JFK? — *not built*
+3. What documents do you need to import from China to the USA? — *not built*
+4. What is an NVOCC, and why does it matter to your shipment? — *not built*
+5. Ocean vs air freight: a real cost and transit comparison — *not built*
+6. Understanding freight quotes: every charge explained — *not built*
+7. How to choose a US freight forwarding partner (for overseas agents) — **built**: `src/content/blog/choosing-a-us-freight-forwarding-partner.md`
+8. Importing from Vietnam to the USA: a complete guide — *not built*
+9. What C-TPAT certification means for your cargo — *not built*
+10. Demurrage and detention: how to avoid the charges — *not built*
 
 Note the shape of these: **comparisons, definitions, timelines, and cost breakdowns**. That is not a coincidence — those are the formats answer engines cite most, because each maps to a question a person actually types.
-
-**Also scoped:** 3 trade-lane pages (e.g. China → USA, Vietnam → USA), 2 location pages (JFK, and the Queens/NY market), 2 partner pages (overseas agents, freight brokers/3PLs). The partner pages close a real gap — the site currently has no dedicated path for the overseas-agent audience, who are one of the three stated target segments.
 
 **Writing rules for whoever produces this content:**
 
@@ -425,10 +430,10 @@ Sequenced by dependency and by return, not by how interesting it is.
 | 3 | **FMC + IATA numbers, hours** (Part B) | owner | One file edit, disproportionate GEO value (§C4) |
 | 4 | **Durable lead sink** (D5) | 2–3 h | Every day without it risks a permanently lost lead |
 | 5 | **GTM + GA4 + full event taxonomy + privacy policy** (Part D) | 1–2 days | Must precede content work, or you can't tell what worked |
-| 6 | **Partner pages + trade-lane pages** (§C6) | 2–3 days | Closes the overseas-agent gap — a stated target audience with no path today |
-| 7 | **Blog system + first 5 articles** | 1–2 weeks | The main GEO engine. Ship 5, measure, then decide on the rest |
+| 6 | ~~Partner pages + trade-lane pages~~ (§C6) | 2–3 days | **Done (2026-09-12).** Closed the overseas-agent gap — a stated target audience with no path before this |
+| 7 | **Blog system + first article** | 1–2 weeks | **Blog plumbing + article #7 done (2026-09-12).** The main GEO engine — 1 of 10 scoped articles shipped so far |
 | 8 | **Real photos, testimonials, logos** (Part B) | owner | Conversion lift on traffic you'll have by then |
-| 9 | **Remaining 5 articles + Looker Studio + review cadence** | ongoing | Compounds |
+| 9 | **Remaining 9 articles + Looker Studio + review cadence** | ongoing | Compounds |
 
 ---
 
@@ -441,8 +446,8 @@ Sequenced by dependency and by return, not by how interesting it is.
 | `npm install` | Once, first time |
 | `npm run dev` | Local preview at `http://localhost:4321`, live-reloading |
 | `npm run build` | Production build into `dist/` and `.vercel/output/` |
-| `npm test` | 212 unit + component tests |
-| `npm run test:build` | Builds, then runs 54 tests against the real built HTML |
+| `npm test` | 278 unit + component tests |
+| `npm run test:build` | Builds, then runs 61 tests against the real built HTML |
 | `npm run test:e2e` | 3 real-browser tests including the full quote flow |
 
 `npm run preview` does **not** work in this project — the Vercel adapter doesn't support it. To inspect the real build locally: `npm run build` then `npx serve dist/client`.
@@ -455,6 +460,10 @@ Sequenced by dependency and by return, not by how interesting it is.
 |---|---|
 | Any company fact — address, phone, email, hours, licenses, social, founded | [src/config/site.ts](../src/config/site.ts) |
 | Service page copy, bullets, FAQs | [src/data/services.ts](../src/data/services.ts) |
+| Trade-lane page copy (China, Vietnam) | [src/data/trade-lanes.ts](../src/data/trade-lanes.ts) |
+| Location page copy (JFK, New York) | [src/data/locations.ts](../src/data/locations.ts) |
+| Partner-audience page copy (overseas agents, brokers/3PLs) | [src/data/partners-audience.ts](../src/data/partners-audience.ts) |
+| Blog post content | [src/content/blog/](../src/content/blog/) |
 | Testimonials | [src/data/testimonials.ts](../src/data/testimonials.ts) |
 | Carrier / association logos | [src/data/partners.ts](../src/data/partners.ts) |
 | The three homepage stat numbers | [src/data/stats.ts](../src/data/stats.ts) |
@@ -476,14 +485,18 @@ Images: overwrite the file in `public/images/` keeping the same filename. Cachin
 | [docs/superpowers/specs/2026-08-09-global-gate-website-design.md](superpowers/specs/2026-08-09-global-gate-website-design.md) | Approved design spec — the 12 catalogued defects, locked decisions, design tokens, conversion design, SEO/GEO strategy, success criteria |
 | [docs/superpowers/plans/2026-08-09-global-gate-phase-1.md](superpowers/plans/2026-08-09-global-gate-phase-1.md) | The 20-task implementation plan. Ends with a **"Known deviations from the approved spec"** table — 6 entries, each a reversible judgment call |
 | `.superpowers/sdd/2026-08-09-global-gate-phase-1/progress.md` | Build ledger: every task, every defect found and fixed, and **20 deferred minor issues** worth triaging before merge |
+| `.superpowers/sdd/2026-09-11-shipping-locations-partners/final-fix-report.md` | The trade-lane/location/partner plan's build ledger and final whole-plan review — 5 findings, all fixed 2026-09-12 |
 | [README.md](../README.md) | Day-to-day maintenance guide, written for a non-technical reader |
 
 ### D. Known open items
 
-- **The final whole-branch review was never run.** All 20 tasks passed individual review, but the single cross-cutting pass over all 33 commits was cancelled. Worth running before merging to `main` — the one genuinely serious bug found during the build (the form posting one format while the server expected another, breaking every no-JS submission) was exactly the kind that only a cross-task review catches.
+- **The Phase 1 plan's final whole-branch review was never run.** All 20 Phase-1 tasks passed individual review, but the single cross-cutting pass over all 33 Phase-1 commits was cancelled. Worth running before merging to `main` — the one genuinely serious bug found during the build (the form posting one format while the server expected another, breaking every no-JS submission) was exactly the kind that only a cross-task review catches. (The *later* trade-lanes/locations/partners plan's own final whole-plan review *was* run, on 2026-09-12 — see the reference row above.)
 - **20 deferred minor issues** are itemized in the ledger. Two worth a look: `typescript` / `@astrojs/check` are not installed, so `tsconfig` strict mode is dormant and never actually runs; and `npm audit` reports 3 high transitive vulnerabilities via `@astrojs/vercel` whose fix requires a breaking downgrade.
 - **Deviations from spec, each deliberate and reversible:** Cloudflare Turnstile replaced with a honeypot; plain `<img>` instead of Astro `<Image>` srcset; `SearchAction` schema omitted (there is no site search); form-failure fallback is an honest error page rather than Vercel KV queueing.
 
 ---
 
-*Phase 1 is complete and tested. Everything above is Phase 2 and 3.*
+*Phase 1 is complete and tested. Phase 2's trade-lane, location, and partner-audience
+pages — plus minimal blog plumbing and article #7 — are also complete and tested as of
+2026-09-12. The remaining 9 blog articles and all of Phase 3 (measurement) are still
+ahead.*
