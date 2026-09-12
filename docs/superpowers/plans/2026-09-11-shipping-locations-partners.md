@@ -2023,7 +2023,7 @@ export const LOCATIONS: LocationPage[] = [
           'The same team also handles cargo through the Port of New York and New Jersey — see the New York freight forwarder page for the ocean-focused view of the same facility and services.',
       },
     ],
-    metaTitle: 'JFK Freight Forwarder — Air & Ocean Cargo',
+    metaTitle: 'JFK Freight Forwarder',
     metaDescription:
       'A JFK-area freight forwarder handling air and ocean cargo in-house: customs clearance, warehousing, and drayage minutes from the airport.',
   },
@@ -2060,7 +2060,7 @@ export const LOCATIONS: LocationPage[] = [
           'The same team and facility handle air cargo through JFK — see the JFK freight forwarder page for the air-focused view of the same services.',
       },
     ],
-    metaTitle: 'New York Freight Forwarder — Ocean & Air Cargo',
+    metaTitle: 'New York Freight Forwarder',
     metaDescription:
       'A New York freight forwarder serving the Port of NY/NJ and JFK: in-house customs clearance, warehousing, and nationwide trucking.',
   },
