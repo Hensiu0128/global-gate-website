@@ -85,7 +85,9 @@ describe.each(SERVICES.map((s) => [s.slug, s.name]))('Service page: %s', (slug, 
     const html = await renderDetail(slug);
     for (const link of service.crossLinks) {
       expect(html).toContain(`href="${link.href}"`);
-      expect(html).toContain(link.text);
+      // HTML-escape the link text to match how Astro renders it
+      const escapedText = link.text.replace(/&/g, '&amp;');
+      expect(html).toContain(escapedText);
     }
   });
 });

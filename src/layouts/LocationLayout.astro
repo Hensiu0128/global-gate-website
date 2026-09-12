@@ -1,0 +1,62 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+import FAQAccordion from '../components/ui/FAQAccordion.astro';
+import CTABand from '../components/ui/CTABand.astro';
+import TrustBar from '../components/trust/TrustBar.astro';
+import { serviceSchema, faqSchema } from '../lib/schema';
+import { canonicalUrl } from '../lib/seo';
+import type { LocationPage } from '../data/locations';
+
+interface Props { location: LocationPage; }
+const { location } = Astro.props;
+
+const pathname = `/locations/${location.slug}`;
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: location.name, href: pathname },
+];
+
+const schemas = [
+  serviceSchema({
+    name: location.name,
+    description: location.metaDescription,
+    url: canonicalUrl(pathname),
+  }),
+  faqSchema(location.faqs),
+];
+---
+<BaseLayout
+  title={location.metaTitle}
+  description={location.metaDescription}
+  {pathname}
+  {breadcrumbs}
+  {schemas}
+>
+  <div class="bg-navy-900">
+    <Breadcrumbs trail={breadcrumbs} />
+    <div class="container-gg pb-14 pt-4 max-w-3xl">
+      <p class="text-amber-400 text-xs font-bold tracking-widest uppercase mb-4">{location.tagline}</p>
+      <h1 class="text-white mb-6" style="font-size:clamp(2.25rem,5.5vw,3.75rem)">{location.name}</h1>
+      <p class="text-slate-300 text-lg leading-relaxed">{location.heroCopy}</p>
+    </div>
+  </div>
+  <TrustBar />
+
+  <section class="bg-white py-16 md:py-20">
+    <div class="container-gg max-w-3xl">
+      <h2 class="font-display text-navy-900 text-3xl md:text-4xl font-bold mb-8">What's included</h2>
+      <ul class="space-y-4">
+        {location.bullets.map((bullet) => (
+          <li class="flex gap-3 text-slate-600 text-base md:text-lg leading-relaxed">
+            <span class="text-amber-500 shrink-0 mt-1" aria-hidden="true">&#10003;</span>
+            {bullet}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <CTABand heading="Shipping through this area?" />
+  <FAQAccordion faqs={location.faqs} heading={`${location.name}: common questions`} />
+</BaseLayout>

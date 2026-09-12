@@ -1,0 +1,16 @@
+---
+import LocationLayout from '../../layouts/LocationLayout.astro';
+import { LOCATIONS } from '../../data/locations';
+import type { LocationPage } from '../../data/locations';
+
+export function getStaticPaths() {
+  return LOCATIONS.map((location) => ({
+    params: { slug: location.slug },
+    props: { location },
+  }));
+}
+
+interface Props { location: LocationPage; }
+const { location } = Astro.props;
+---
+<LocationLayout {location} />

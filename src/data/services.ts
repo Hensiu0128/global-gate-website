@@ -144,6 +144,9 @@ export const SERVICES: Service[] = [
     metaTitle: 'Warehousing & Distribution Near JFK',
     metaDescription:
       'Secure warehousing and distribution in Queens, NY, minutes from JFK. Deconsolidation, pick and pack, real-time inventory, and links to customs and trucking.',
+    crossLinks: [
+      { text: 'JFK Freight Forwarder — air & ocean cargo near JFK', href: '/locations/jfk-freight-forwarder' },
+    ],
   },
   {
     slug: 'customs-clearance',
@@ -230,6 +233,9 @@ export const SERVICES: Service[] = [
     metaTitle: 'Domestic Trucking & Port Drayage',
     metaDescription:
       'Port and airport drayage plus nationwide FTL and LTL delivery, booked alongside your ocean or air freight, with appointment scheduling and no coverage gaps.',
+    crossLinks: [
+      { text: 'New York Freight Forwarder — ocean & air cargo, NY metro', href: '/locations/new-york-freight-forwarder' },
+    ],
   },
   {
     slug: 'overseas-agent-network',
