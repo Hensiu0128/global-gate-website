@@ -1,0 +1,64 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+import FAQAccordion from '../components/ui/FAQAccordion.astro';
+import CTABand from '../components/ui/CTABand.astro';
+import TrustBar from '../components/trust/TrustBar.astro';
+import { serviceSchema, faqSchema } from '../lib/schema';
+import { canonicalUrl } from '../lib/seo';
+import type { TradeLane } from '../data/trade-lanes';
+
+interface Props { lane: TradeLane; }
+const { lane } = Astro.props;
+
+const pathname = `/shipping/${lane.slug}`;
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Trade Lanes', href: '/shipping' },
+  { name: lane.name, href: pathname },
+];
+
+const schemas = [
+  serviceSchema({
+    name: lane.name,
+    description: lane.metaDescription,
+    url: canonicalUrl(pathname),
+    areaServed: { type: 'Country', name: lane.country },
+  }),
+  faqSchema(lane.faqs),
+];
+---
+<BaseLayout
+  title={lane.metaTitle}
+  description={lane.metaDescription}
+  {pathname}
+  {breadcrumbs}
+  {schemas}
+>
+  <div class="bg-navy-900">
+    <Breadcrumbs trail={breadcrumbs} />
+    <div class="container-gg pb-14 pt-4 max-w-3xl">
+      <p class="text-amber-400 text-xs font-bold tracking-widest uppercase mb-4">{lane.tagline}</p>
+      <h1 class="text-white mb-6" style="font-size:clamp(2.25rem,5.5vw,3.75rem)">{lane.name}</h1>
+      <p class="text-slate-300 text-lg leading-relaxed">{lane.heroCopy}</p>
+    </div>
+  </div>
+  <TrustBar />
+
+  <section class="bg-white py-16 md:py-20">
+    <div class="container-gg max-w-3xl">
+      <h2 class="font-display text-navy-900 text-3xl md:text-4xl font-bold mb-8">What's included</h2>
+      <ul class="space-y-4">
+        {lane.bullets.map((bullet) => (
+          <li class="flex gap-3 text-slate-600 text-base md:text-lg leading-relaxed">
+            <span class="text-amber-500 shrink-0 mt-1" aria-hidden="true">&#10003;</span>
+            {bullet}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <CTABand heading={`Need a quote for ${lane.country}?`} />
+  <FAQAccordion faqs={lane.faqs} heading={`${lane.name}: common questions`} />
+</BaseLayout>

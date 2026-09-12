@@ -52,4 +52,11 @@ describe('Footer', () => {
     expect(html).toContain('/privacy-policy');
     expect(html).toContain('/terms');
   });
+
+  it('links the trade-lane pages', async () => {
+    const html = await render();
+    expect(html).toContain('/shipping');
+    expect(html).toContain('/shipping/china-to-usa');
+    expect(html).toContain('/shipping/vietnam-to-usa');
+  });
 });

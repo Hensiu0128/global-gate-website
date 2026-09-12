@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+import FAQAccordion from '../../components/ui/FAQAccordion.astro';
+import CTABand from '../../components/ui/CTABand.astro';
+import TrustBar from '../../components/trust/TrustBar.astro';
+import { faqSchema } from '../../lib/schema';
+import { TRADE_LANES } from '../../data/trade-lanes';
+
+const breadcrumbs = [{ name: 'Home', href: '/' }, { name: 'Trade Lanes', href: '/shipping' }];
+const description =
+  'FCL and air freight forwarding from any origin, with in-house customs, warehousing, and delivery. China and Vietnam are two lanes handled in depth below.';
+
+const faqs = [
+  {
+    question: 'Do you only ship from China and Vietnam?',
+    answer:
+      'No. Global Gate Logistics ships FCL and air cargo from any origin, not only the two lanes detailed on this page. Request a quote for your specific origin and destination.',
+  },
+  {
+    question: 'What is the difference between ocean and air freight for these lanes?',
+    answer:
+      'Ocean freight is almost always cheaper per kilogram for heavy cargo, while air freight is competitive for shipments under roughly 500 kilograms or when a delay would cost more than the freight itself. Ocean transit runs 14 to 38 days depending on the US coast; air transit runs 3 to 7 days door to door.',
+  },
+];
+---
+<BaseLayout title="Trade Lanes" {description} pathname="/shipping" {breadcrumbs} schemas={[faqSchema(faqs)]}>
+  <div class="bg-navy-900">
+    <Breadcrumbs trail={breadcrumbs} />
+    <div class="container-gg pb-12 pt-4 max-w-3xl">
+      <h1 class="text-white mb-4" style="font-size:clamp(2.25rem,5.5vw,3.75rem)">Trade Lanes</h1>
+      <p class="text-slate-300">{description}</p>
+    </div>
+  </div>
+  <TrustBar />
+  <div class="container-gg py-16">
+    <ul class="grid sm:grid-cols-2 gap-6">
+      {TRADE_LANES.map((lane) => (
+        <li class="bg-white border border-slate-100 rounded-xl p-6 hover:border-amber-400 transition-colors">
+          <a href={`/shipping/${lane.slug}`} class="block">
+            <span class="font-display text-navy-900 font-bold text-lg block mb-2">{lane.name}</span>
+            <span class="text-slate-500 text-sm">{lane.tagline}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+  <CTABand />
+  <FAQAccordion {faqs} heading="Trade lanes: common questions" />
+</BaseLayout>

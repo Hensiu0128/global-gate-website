@@ -1,0 +1,16 @@
+---
+import TradeLaneLayout from '../../layouts/TradeLaneLayout.astro';
+import { TRADE_LANES } from '../../data/trade-lanes';
+import type { TradeLane } from '../../data/trade-lanes';
+
+export function getStaticPaths() {
+  return TRADE_LANES.map((lane) => ({
+    params: { slug: lane.slug },
+    props: { lane },
+  }));
+}
+
+interface Props { lane: TradeLane; }
+const { lane } = Astro.props;
+---
+<TradeLaneLayout {lane} />
