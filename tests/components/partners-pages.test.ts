@@ -45,6 +45,16 @@ describe.each(PARTNER_AUDIENCES.map((p) => [p.slug, p.name]))('Partner page: %s'
     expect(html).toContain('href="/quote"');
   });
 
+  it('renders any cross-links as real anchors', async () => {
+    const partner = PARTNER_AUDIENCES.find((p) => p.slug === slug)!;
+    if (!partner.crossLinks || partner.crossLinks.length === 0) return;
+    const html = await renderDetail(slug);
+    for (const link of partner.crossLinks) {
+      expect(html).toContain(`href="${link.href}"`);
+      expect(html).toContain(link.text);
+    }
+  });
+
   it('links back home via breadcrumbs', async () => {
     const html = await renderDetail(slug);
     expect(html).toContain('href="/"');

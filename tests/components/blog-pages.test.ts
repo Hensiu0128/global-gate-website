@@ -18,6 +18,15 @@ function stripJsonLd(html: string): string {
   return html.replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/g, '');
 }
 
+function decodeHtmlEntities(html: string): string {
+  return html
+    .replace(/&#39;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>');
+}
+
 describe('Blog index', () => {
   it('lists every published post by title', async () => {
     const posts = await getCollection('blog');
@@ -30,33 +39,34 @@ describe('Blog index', () => {
   });
 });
 
-describe('Blog post: fixture-post', () => {
+describe('Blog post: choosing-a-us-freight-forwarding-partner', () => {
   it('renders exactly one h1 with the post title', async () => {
-    const html = await renderPost('fixture-post');
+    const html = await renderPost('choosing-a-us-freight-forwarding-partner');
     expect(html.match(/<h1[\s>]/g) ?? []).toHaveLength(1);
-    expect(html).toContain('Fixture Post');
+    expect(html).toContain('How to Choose a US Freight Forwarding Partner');
   });
 
   it('emits Article JSON-LD with dateModified', async () => {
-    const html = await renderPost('fixture-post');
+    const html = await renderPost('choosing-a-us-freight-forwarding-partner');
     expect(html).toContain('"@type":"Article"');
     expect(html).toContain('"dateModified"');
   });
 
   it('renders the article body as crawlable text', async () => {
-    const html = await renderPost('fixture-post');
+    const html = await renderPost('choosing-a-us-freight-forwarding-partner');
     const body = stripJsonLd(html);
-    expect(body).toContain('temporary fixture content');
+    expect(body).toContain('licensing status, in-house service scope, and quote turnaround time');
   });
 
   it('renders every FAQ answer as crawlable text, not hidden behind JavaScript', async () => {
     const posts = await getCollection('blog');
-    const post = posts.find((p) => p.id === 'fixture-post')!;
-    const html = await renderPost('fixture-post');
+    const post = posts.find((p) => p.id === 'choosing-a-us-freight-forwarding-partner')!;
+    const html = await renderPost('choosing-a-us-freight-forwarding-partner');
     const body = stripJsonLd(html);
+    const decodedBody = decodeHtmlEntities(body);
     for (const faq of post.data.faqs) {
-      expect(body).toContain(faq.question);
-      expect(body).toContain(faq.answer);
+      expect(decodedBody).toContain(faq.question);
+      expect(decodedBody).toContain(faq.answer);
     }
     expect(html).not.toMatch(/<details[^>]*\sopen[\s>]/);
   });

@@ -9,6 +9,7 @@ export interface PartnerAudience {
   faqs: FAQ[];
   metaTitle: string;
   metaDescription: string;
+  crossLinks?: { text: string; href: string }[];
 }
 
 export const PARTNER_AUDIENCES: PartnerAudience[] = [
@@ -50,6 +51,9 @@ export const PARTNER_AUDIENCES: PartnerAudience[] = [
     metaTitle: 'Overseas Agent Partnership',
     metaDescription:
       'A US destination partner for overseas freight forwarders: in-house ocean, air, customs, and warehousing, WCA membership, and 24-hour rate turnaround.',
+    crossLinks: [
+      { text: 'How to choose a US freight forwarding partner', href: '/blog/choosing-a-us-freight-forwarding-partner' },
+    ],
   },
 ];
 
