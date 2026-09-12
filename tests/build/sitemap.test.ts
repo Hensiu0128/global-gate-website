@@ -26,5 +26,11 @@ describe('sitemap-0.xml', () => {
     expect(sitemap).toContain('https://global-gate.us/blog</loc>');
     expect(sitemap).toContain('https://global-gate.us/blog/choosing-a-us-freight-forwarding-partner</loc>');
     expect(sitemap).toContain('https://global-gate.us/partners/agents</loc>');
+    expect(sitemap).toContain('https://global-gate.us/shipping</loc>');
+    expect(sitemap).toContain('https://global-gate.us/shipping/china-to-usa</loc>');
+    expect(sitemap).toContain('https://global-gate.us/shipping/vietnam-to-usa</loc>');
+    expect(sitemap).toContain('https://global-gate.us/locations/jfk-freight-forwarder</loc>');
+    expect(sitemap).toContain('https://global-gate.us/locations/new-york-freight-forwarder</loc>');
+    expect(sitemap).toContain('https://global-gate.us/partners/brokers</loc>');
   });
 });

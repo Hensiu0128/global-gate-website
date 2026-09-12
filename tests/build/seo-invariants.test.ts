@@ -32,7 +32,13 @@ describe('every built page', () => {
       'dist/client/services/overseas-agent-network/index.html',
       'dist/client/blog/index.html',
       'dist/client/blog/choosing-a-us-freight-forwarding-partner/index.html',
+      'dist/client/shipping/index.html',
+      'dist/client/shipping/china-to-usa/index.html',
+      'dist/client/shipping/vietnam-to-usa/index.html',
+      'dist/client/locations/jfk-freight-forwarder/index.html',
+      'dist/client/locations/new-york-freight-forwarder/index.html',
       'dist/client/partners/agents/index.html',
+      'dist/client/partners/brokers/index.html',
       'dist/client/privacy-policy/index.html', 'dist/client/terms/index.html', 'dist/client/404.html',
     ];
     for (const route of expected) expect(paths, `missing ${route}`).toContain(route);
