@@ -16,7 +16,7 @@ faqs:
     answer: "A same-day or next-business-day response is the standard an agent should expect for a routine rate request. A partner that routinely takes more than 24 hours to quote will struggle to compete for time-sensitive cargo, regardless of what its website claims."
 ---
 
-A US freight forwarding partner should be evaluated on three checkable facts — licensing status, in-house service scope, and quote turnaround time — not on marketing language alone. For an overseas agent choosing a US destination partner, getting this wrong means a shipment that stalls after it lands, not before.
+A US freight forwarding partner should be evaluated on three checkable facts — licensing status, in-house service scope, and quote turnaround time — not on marketing language alone. For an overseas agent [choosing a US destination partner](/services/overseas-agent-network), getting this wrong means a shipment that stalls after it lands, not before.
 
 ## Start with the license, not the pitch
 
@@ -38,7 +38,7 @@ This matters most at the exact moment an agent has the least visibility: after c
 
 ## Network membership is a fast, imperfect signal
 
-Forwarder network memberships such as WCA (World Cargo Alliance) or JCtrans are one of the fastest ways an agent can screen a potential US partner, because membership requires financial vetting and a credit reference check before approval. Global Gate Logistics holds WCA membership for exactly this reason — it gives an overseas agent a second, independent point of verification beyond the FMC license.
+Forwarder network memberships such as WCA (World Cargo Alliance) or JCtrans are one of the fastest ways an agent can screen a potential US partner, because membership requires financial vetting and a credit reference check before approval. [Global Gate Logistics holds WCA membership](/partners/agents) for exactly this reason — it gives an overseas agent a second, independent point of verification beyond the FMC license.
 
 Network membership is not a substitute for checking the license directly. It's a screening tool, not a guarantee — treat it as one input alongside the FMC/IATA checks above, not a replacement for them.
 
@@ -46,7 +46,7 @@ Network membership is not a substitute for checking the license directly. It's a
 
 A US partner that takes more than 24 hours to answer a routine rate request will be too slow for time-sensitive cargo, and the same responsiveness — or lack of it — tends to repeat once a real shipment is moving and something needs an answer quickly. Testing this before committing to a partner costs nothing: send a realistic rate request and time the reply.
 
-Global Gate Logistics quotes ocean and air rate requests within 24 business hours, which is the standard an agent should hold any US partner to before routing volume through them.
+Global Gate Logistics quotes ocean and air rate requests within 24 business hours, which is the standard an agent should hold any US partner to before routing volume through them. [Request a rate quote](/quote) to test the turnaround directly.
 
 ## What to have ready before you evaluate a partner
 

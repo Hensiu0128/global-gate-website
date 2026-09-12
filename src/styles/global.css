@@ -77,6 +77,8 @@
 .prose-gg h2 { font-weight: 700; color: #0A1628; font-size: 1.5rem; margin: 2.5rem 0 1rem; }
 .prose-gg h3 { font-weight: 700; color: #0A1628; font-size: 1.25rem; margin: 2rem 0 0.75rem; }
 .prose-gg p { color: #475569; line-height: 1.75; margin-bottom: 1.25rem; }
+.prose-gg a { color: #D97706; text-decoration: underline; text-underline-offset: 2px; }
+.prose-gg a:hover { color: #F59E0B; }
 .prose-gg table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; font-size: 0.95rem; }
 .prose-gg th, .prose-gg td { text-align: left; padding: 0.6rem 0.8rem; border-bottom: 1px solid #e2e8f0; }
 .prose-gg th { color: #0A1628; font-weight: 700; }
