@@ -12,6 +12,8 @@ const posts = (await getCollection('blog')).sort(
 const breadcrumbs = [{ name: 'Home', href: '/' }, { name: 'Blog', href: '/blog' }];
 const description =
   'Answers to real questions about ocean and air freight, customs clearance, and choosing a US freight forwarding partner.';
+const intro =
+  "Each article walks through one real part of the shipping process — how FCL and LCL pricing actually compares, what a customs clearance timeline realistically looks like, and what to check before trusting a new forwarder with your cargo. It's written for the people who ask us these questions directly: importers and exporters moving cargo into the US, the overseas agents who hand off shipments to us, and the brokers and 3PLs who need a reliable partner on this side of the ocean.";
 ---
 <BaseLayout title="Freight Forwarding Blog" {description} pathname="/blog" {breadcrumbs}>
   <div class="bg-navy-900">
@@ -19,6 +21,7 @@ const description =
     <div class="container-gg pb-12 pt-4">
       <h1 class="text-white mb-4" style="font-size:clamp(2.25rem,5.5vw,3.75rem)">Blog</h1>
       <p class="text-slate-300 max-w-2xl">{description}</p>
+      <p class="text-slate-400 max-w-2xl mt-3">{intro}</p>
     </div>
   </div>
   <TrustBar />
