@@ -32,6 +32,16 @@ describe('Services hub', () => {
     const html = await container.renderToString(ServicesIndex);
     for (const s of SERVICES) expect(html).toContain(`/services/${s.slug}`);
   });
+
+  it('never claims Asia-America exclusivity — positioning is any origin, any destination', () => {
+    const exclusivityPhrases = [/specializ\w* in asia to america/i, /between asia and the united states/i];
+    for (const s of SERVICES) {
+      const haystack = [s.heroCopy, s.metaDescription, ...s.faqs.map((f) => f.answer)].join(' ');
+      for (const phrase of exclusivityPhrases) {
+        expect(haystack, `${s.slug}: found exclusivity language matching ${phrase}`).not.toMatch(phrase);
+      }
+    }
+  });
 });
 
 describe.each(SERVICES.map((s) => [s.slug, s.name]))('Service page: %s', (slug, name) => {

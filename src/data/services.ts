@@ -24,7 +24,7 @@ export const SERVICES: Service[] = [
     cardCopy:
       'Full container load (FCL) and less-than-container load (LCL) ocean freight with competitive rates on major trade lanes.',
     heroCopy:
-      'Global Gate Logistics moves full and partial container loads between Asia and the United States as a licensed NVOCC. Because we hold service contracts directly with the major ocean carriers, we quote from our own rates rather than reselling someone else’s.',
+      'Global Gate Logistics moves full and partial container loads for any origin or destination as a licensed NVOCC, with particular depth on Asia-to-US lanes. Because we hold service contracts directly with the major ocean carriers, we quote from our own rates rather than reselling someone else’s.',
     bullets: [
       'FCL in 20′, 40′, 40′HC and 45′ equipment',
       'Weekly LCL consolidations from major Asian ports',
@@ -57,7 +57,7 @@ export const SERVICES: Service[] = [
     image: '/images/service-ocean.webp',
     metaTitle: 'Ocean Freight FCL & LCL Shipping',
     metaDescription:
-      'Licensed NVOCC ocean freight from Asia to the USA. FCL and LCL container shipping with direct carrier contracts, in-house customs clearance, and 24-hour quotes.',
+      'Licensed NVOCC ocean freight for any origin or destination. FCL and LCL container shipping with direct carrier contracts, in-house customs, and 24-hour quotes.',
   },
   {
     slug: 'air-freight',
@@ -274,7 +274,7 @@ export const SERVICES: Service[] = [
       {
         question: 'Which trade lanes do you specialize in?',
         answer:
-          'Global Gate Logistics specializes in Asia to America routing, with particular depth on shipments moving into the New York and New Jersey gateway through JFK and the Port of New York and New Jersey.',
+          'Global Gate Logistics handles FCL and air freight for any origin or destination, with particular depth on Asia-to-US lanes and on shipments moving into the New York and New Jersey gateway through JFK and the Port of New York and New Jersey.',
       },
     ],
     image: null,
