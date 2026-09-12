@@ -2328,7 +2328,12 @@ constant):
 
 ```ts
   it('lists the trade-lane hub and both lane pages', () => {
-    expect(llms).toContain('/shipping/asia-to-usa');
+    // The hub route is /shipping (not /shipping/asia-to-usa — that URL was an
+    // error in an earlier draft of this plan; Task 10 already built the real
+    // hub at src/pages/shipping/index.astro, served at /shipping). Match the
+    // closing paren so this doesn't trivially pass via the lane URLs below,
+    // which also contain "/shipping" as a substring.
+    expect(llms).toContain('(https://global-gate.us/shipping)');
     expect(llms).toContain('/shipping/china-to-usa');
     expect(llms).toContain('/shipping/vietnam-to-usa');
   });
@@ -2357,7 +2362,7 @@ matching the file's existing format.
 
 In `tests/build/seo-invariants.test.ts`, the `expected` array holds full built-file paths — add:
 ```ts
-      'dist/client/shipping/asia-to-usa/index.html',
+      'dist/client/shipping/index.html',
       'dist/client/shipping/china-to-usa/index.html',
       'dist/client/shipping/vietnam-to-usa/index.html',
       'dist/client/locations/jfk-freight-forwarder/index.html',
@@ -2368,7 +2373,7 @@ In `tests/build/seo-invariants.test.ts`, the `expected` array holds full built-f
 In `tests/build/sitemap.test.ts`, the "includes the indexable pages" test checks full URLs with
 a `</loc>` suffix — add to that `it()`:
 ```ts
-    expect(sitemap).toContain('https://global-gate.us/shipping/asia-to-usa</loc>');
+    expect(sitemap).toContain('https://global-gate.us/shipping</loc>');
     expect(sitemap).toContain('https://global-gate.us/shipping/china-to-usa</loc>');
     expect(sitemap).toContain('https://global-gate.us/shipping/vietnam-to-usa</loc>');
     expect(sitemap).toContain('https://global-gate.us/locations/jfk-freight-forwarder</loc>');
@@ -2411,7 +2416,7 @@ Expected: PASS.
 
 - [ ] **Step 4: Manual JS-disabled check**
 
-With the dev server running, disable JavaScript and load: `/shipping/asia-to-usa`,
+With the dev server running, disable JavaScript and load: `/shipping` (the trade-lane hub),
 `/shipping/china-to-usa`, `/shipping/vietnam-to-usa`, `/locations/jfk-freight-forwarder`,
 `/locations/new-york-freight-forwarder`, `/partners/brokers`. Confirm all text, FAQ answers, and
 navigation (including the new footer Trade Lanes column and header Trade Lanes link) render
