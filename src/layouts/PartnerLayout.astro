@@ -4,6 +4,7 @@ import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
 import FAQAccordion from '../components/ui/FAQAccordion.astro';
 import CTABand from '../components/ui/CTABand.astro';
 import TrustBar from '../components/trust/TrustBar.astro';
+import CrossLinks from '../components/ui/CrossLinks.astro';
 import { serviceSchema, faqSchema } from '../lib/schema';
 import { canonicalUrl } from '../lib/seo';
 import type { PartnerAudience } from '../data/partners-audience';
@@ -57,21 +58,7 @@ const schemas = [
     </div>
   </section>
 
-  {partner.crossLinks && partner.crossLinks.length > 0 && (
-    <section class="bg-slate-50 py-10">
-      <div class="container-gg max-w-3xl">
-        <ul class="flex flex-wrap gap-6">
-          {partner.crossLinks.map((link) => (
-            <li>
-              <a href={link.href} class="inline-flex items-center gap-2 text-amber-600 hover:text-amber-500 font-semibold">
-                {link.text} <span aria-hidden="true">&rarr;</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  )}
+  <CrossLinks links={partner.crossLinks ?? []} />
 
   <CTABand heading="Ready to route a shipment to us?" />
   <FAQAccordion faqs={partner.faqs} heading={`${partner.name}: common questions`} />

@@ -49,4 +49,16 @@ describe.each(LOCATIONS.map((l) => [l.slug, l.name]))('Location page: %s', (slug
     const html = await renderDetail(slug);
     expect(html).toContain('href="/quote"');
   });
+
+  it('renders any cross-links as real anchors with their link text', async () => {
+    const location = LOCATIONS.find((l) => l.slug === slug)!;
+    if (!location.crossLinks || location.crossLinks.length === 0) return;
+    const html = await renderDetail(slug);
+    for (const link of location.crossLinks) {
+      expect(html).toContain(`href="${link.href}"`);
+      // HTML-escape the link text to match how Astro renders it
+      const escapedText = link.text.replace(/&/g, '&amp;');
+      expect(html).toContain(escapedText);
+    }
+  });
 });

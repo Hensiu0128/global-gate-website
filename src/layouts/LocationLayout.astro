@@ -4,6 +4,7 @@ import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
 import FAQAccordion from '../components/ui/FAQAccordion.astro';
 import CTABand from '../components/ui/CTABand.astro';
 import TrustBar from '../components/trust/TrustBar.astro';
+import CrossLinks from '../components/ui/CrossLinks.astro';
 import { serviceSchema, faqSchema } from '../lib/schema';
 import { canonicalUrl } from '../lib/seo';
 import type { LocationPage } from '../data/locations';
@@ -56,6 +57,8 @@ const schemas = [
       </ul>
     </div>
   </section>
+
+  <CrossLinks links={location.crossLinks ?? []} />
 
   <CTABand heading="Shipping through this area?" />
   <FAQAccordion faqs={location.faqs} heading={`${location.name}: common questions`} />

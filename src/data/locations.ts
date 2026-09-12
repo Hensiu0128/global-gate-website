@@ -10,6 +10,7 @@ export interface LocationPage {
   faqs: FAQ[];
   metaTitle: string;
   metaDescription: string;
+  crossLinks?: { text: string; href: string }[];
 }
 
 export const LOCATIONS: LocationPage[] = [
@@ -49,6 +50,10 @@ export const LOCATIONS: LocationPage[] = [
     metaTitle: 'JFK Freight Forwarder',
     metaDescription:
       'A JFK-area freight forwarder handling air and ocean cargo in-house: customs clearance, warehousing, and drayage minutes from the airport.',
+    crossLinks: [
+      { text: 'Warehousing & Distribution', href: '/services/warehousing-distribution' },
+      { text: 'New York Freight Forwarder — ocean & air cargo, NY metro', href: '/locations/new-york-freight-forwarder' },
+    ],
   },
   {
     slug: 'new-york-freight-forwarder',
@@ -86,6 +91,10 @@ export const LOCATIONS: LocationPage[] = [
     metaTitle: 'New York Freight Forwarder',
     metaDescription:
       'A New York freight forwarder serving the Port of NY/NJ and JFK: in-house customs clearance, warehousing, and nationwide trucking.',
+    crossLinks: [
+      { text: 'Domestic Trucking', href: '/services/domestic-trucking' },
+      { text: 'JFK Freight Forwarder — air & ocean cargo near JFK', href: '/locations/jfk-freight-forwarder' },
+    ],
   },
 ];
 

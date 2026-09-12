@@ -71,5 +71,17 @@ describe.each(TRADE_LANES.map((l) => [l.slug, l.name, l.country]))(
       const html = await renderDetail(slug);
       expect(html).toContain('href="/shipping"');
     });
+
+    it('renders any cross-links as real anchors with their link text', async () => {
+      const lane = TRADE_LANES.find((l) => l.slug === slug)!;
+      if (!lane.crossLinks || lane.crossLinks.length === 0) return;
+      const html = await renderDetail(slug);
+      for (const link of lane.crossLinks) {
+        expect(html).toContain(`href="${link.href}"`);
+        // HTML-escape the link text to match how Astro renders it
+        const escapedText = link.text.replace(/&/g, '&amp;');
+        expect(html).toContain(escapedText);
+      }
+    });
   }
 );

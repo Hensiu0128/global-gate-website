@@ -10,6 +10,7 @@ export interface TradeLane {
   faqs: FAQ[];
   metaTitle: string;
   metaDescription: string;
+  crossLinks?: { text: string; href: string }[];
 }
 
 export const TRADE_LANES: TradeLane[] = [
@@ -52,6 +53,12 @@ export const TRADE_LANES: TradeLane[] = [
     metaTitle: 'China to USA Freight Forwarding',
     metaDescription:
       'Ocean FCL & LCL and air freight from China to the USA: direct carrier contracts, in-house customs and ISF filing, and JFK-area warehousing.',
+    crossLinks: [
+      { text: 'Ocean Freight FCL & LCL Shipping', href: '/services/ocean-freight' },
+      { text: 'Air Freight', href: '/services/air-freight' },
+      { text: 'Customs Clearance', href: '/services/customs-clearance' },
+      { text: 'Vietnam to USA Freight', href: '/shipping/vietnam-to-usa' },
+    ],
   },
   {
     slug: 'vietnam-to-usa',
@@ -92,6 +99,12 @@ export const TRADE_LANES: TradeLane[] = [
     metaTitle: 'Vietnam to USA Freight Forwarding',
     metaDescription:
       'Ocean FCL & LCL and air freight from Vietnam to the USA: in-house customs and ISF filing, direct carrier contracts, and JFK-area warehousing.',
+    crossLinks: [
+      { text: 'Ocean Freight FCL & LCL Shipping', href: '/services/ocean-freight' },
+      { text: 'Air Freight', href: '/services/air-freight' },
+      { text: 'Customs Clearance', href: '/services/customs-clearance' },
+      { text: 'China to USA Freight', href: '/shipping/china-to-usa' },
+    ],
   },
 ];
 
