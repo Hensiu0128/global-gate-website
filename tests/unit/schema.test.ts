@@ -76,14 +76,14 @@ describe('serviceSchema', () => {
     expect(s.areaServed).toEqual({ '@type': 'Country', name: 'United States' });
   });
 
-  it('accepts a per-call areaServed override for trade-lane pages', () => {
+  it('accepts a per-call areaServed override', () => {
     const s = serviceSchema({
-      name: 'China to USA Ocean Freight',
-      description: 'Ocean freight from China.',
-      url: 'https://global-gate.us/shipping/china-to-usa',
-      areaServed: { type: 'Country', name: 'China' },
+      name: 'JFK Freight Forwarder',
+      description: 'Air and ocean cargo near JFK.',
+      url: 'https://global-gate.us/locations/jfk-freight-forwarder',
+      areaServed: { type: 'City', name: 'New York' },
     }) as Record<string, any>;
-    expect(s.areaServed).toEqual({ '@type': 'Country', name: 'China' });
+    expect(s.areaServed).toEqual({ '@type': 'City', name: 'New York' });
   });
 });
 

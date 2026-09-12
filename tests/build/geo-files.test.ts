@@ -70,17 +70,6 @@ describe('llms.txt', () => {
     expect(llms).not.toContain('Asia to America');
   });
 
-  it('lists the trade-lane hub and both lane pages', () => {
-    // The hub route is /shipping (not /shipping/asia-to-usa — that URL was an
-    // error in an earlier draft of this plan; Task 10 already built the real
-    // hub at src/pages/shipping/index.astro, served at /shipping). Match the
-    // closing paren so this doesn't trivially pass via the lane URLs below,
-    // which also contain "/shipping" as a substring.
-    expect(llms).toContain('(https://global-gate.us/shipping)');
-    expect(llms).toContain('/shipping/china-to-usa');
-    expect(llms).toContain('/shipping/vietnam-to-usa');
-  });
-
   it('lists both location pages', () => {
     expect(llms).toContain('/locations/jfk-freight-forwarder');
     expect(llms).toContain('/locations/new-york-freight-forwarder');

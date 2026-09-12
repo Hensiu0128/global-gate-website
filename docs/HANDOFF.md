@@ -24,8 +24,8 @@ Read §1 and §2 before you touch anything. The rest can be read as you need it.
 
 | | |
 |---|---|
-| Pages building | **26** (22 indexable + 404 + 3 noindex form-confirmation pages) |
-| Tests passing | **342** — 278 unit/component, 61 build-output, 3 end-to-end browser |
+| Pages building | **23** (19 indexable + 404 + 3 noindex form-confirmation pages) |
+| Tests passing | **323** — 260 unit/component, 60 build-output, 3 end-to-end browser |
 | Working tree | Clean, everything committed |
 | Git remote | **None configured** — the code exists only on this machine |
 | Deployed | **No.** No Vercel project, no DNS change, no Resend account |
@@ -224,9 +224,9 @@ It costs about ten minutes: create the account, use **Import from Google Search 
 
 Six service pages is enough to exist. It is not enough to be cited. AI engines quote pages that answer a *specific question* completely.
 
-**Done as of 2026-09-12:** the trade-lane pages (`/shipping/china-to-usa`, `/shipping/vietnam-to-usa`, plus a `/shipping` hub with real body copy — see `src/data/trade-lanes.ts`), the location pages (`/locations/jfk-freight-forwarder`, `/locations/new-york-freight-forwarder` — see `src/data/locations.ts`), the two partner-audience pages (`/partners/agents`, `/partners/brokers` — see `src/data/partners-audience.ts`), minimal blog plumbing (a content collection, index page, and detail template with `Article`/`FAQPage` schema — see `src/content/blog/` and `src/pages/blog/`), and blog article #7 below. All of these pages now cross-link to relevant services and to each other via a shared `src/components/ui/CrossLinks.astro` component.
+**Done as of 2026-09-12:** the location pages (`/locations/jfk-freight-forwarder`, `/locations/new-york-freight-forwarder` — see `src/data/locations.ts`), the two partner-audience pages (`/partners/agents`, `/partners/brokers` — see `src/data/partners-audience.ts`), minimal blog plumbing (a content collection, index page, and detail template with `Article`/`FAQPage` schema — see `src/content/blog/` and `src/pages/blog/`), and blog article #7 below. All of these pages cross-link to relevant services and to each other via a shared `src/components/ui/CrossLinks.astro` component.
 
-Originally 3 trade lanes were scoped; only 2 (China, Vietnam) were built, which was judged sufficient coverage for now — revisit only if a third lane becomes a real, confirmed business need, not as a default next step.
+**Removed as of 2026-09-12 (owner's request):** trade-lane pages (`/shipping` hub plus `/shipping/china-to-usa` and `/shipping/vietnam-to-usa`) were built, reviewed, and shipped, then deleted at the owner's explicit request after a localhost review — not a business need going forward. `src/data/trade-lanes.ts` and the associated layout/route/tests no longer exist. If lane-specific pages are wanted again later, this is new scope, not a revert.
 
 **Not yet built:** 9 of the 10 scoped blog articles (only #7 exists). This is still substantial work — do not assume it is done because the surrounding plumbing and one article are.
 
@@ -253,7 +253,7 @@ Note the shape of these: **comparisons, definitions, timelines, and cost breakdo
 - Put the answer **before** the explanation, always.
 - Keep to Hard Rule 3: never state a rate, transit time, or capability that isn't real.
 
-**Schema to add in Phase 2:** `Article` (with `dateModified`) on every post, `Service` with `areaServed` per trade lane, `Person` for any named expert, `BreadcrumbList` on the new hierarchy. **Do not add `Review` or `AggregateRating` until real, verifiable reviews exist** — fabricated review markup is a manual-action risk and a straight violation of Hard Rule 3.
+**Schema to add in Phase 2:** `Article` (with `dateModified`) on every post, `Person` for any named expert, `BreadcrumbList` on the new hierarchy. (`serviceSchema()` in `src/lib/schema.ts` already supports a per-call `areaServed` override — added for the now-removed trade-lane pages, but generic and still available, e.g. for a future location-specific `City` area.) **Do not add `Review` or `AggregateRating` until real, verifiable reviews exist** — fabricated review markup is a manual-action risk and a straight violation of Hard Rule 3.
 
 ### C7. Measuring whether any of this worked
 
@@ -364,7 +364,7 @@ Register these under **Admin → Custom definitions** before sending events, or 
 
 | Dimension | Scope | Values |
 |---|---|---|
-| `page_type` | Event | `home`, `service`, `service_hub`, `blog`, `trade_lane`, `location`, `partner`, `contact`, `quote`, `legal` |
+| `page_type` | Event | `home`, `service`, `service_hub`, `blog`, `location`, `partner`, `contact`, `quote`, `legal` |
 | `service_slug` | Event | `ocean-freight`, `air-freight`, `warehousing-distribution`, `customs-clearance`, `domestic-trucking`, `overseas-agent-network` |
 | `shipping_mode` | Event | from `SHIPPING_MODES` in [src/lib/quote-validation.ts](../src/lib/quote-validation.ts) |
 | `audience_segment` | Event | `importer`, `overseas_agent`, `broker_3pl`, `unknown` |
@@ -430,7 +430,7 @@ Sequenced by dependency and by return, not by how interesting it is.
 | 3 | **FMC + IATA numbers, hours** (Part B) | owner | One file edit, disproportionate GEO value (§C4) |
 | 4 | **Durable lead sink** (D5) | 2–3 h | Every day without it risks a permanently lost lead |
 | 5 | **GTM + GA4 + full event taxonomy + privacy policy** (Part D) | 1–2 days | Must precede content work, or you can't tell what worked |
-| 6 | ~~Partner pages + trade-lane pages~~ (§C6) | 2–3 days | **Done (2026-09-12).** Closed the overseas-agent gap — a stated target audience with no path before this |
+| 6 | ~~Partner pages + location pages~~ (§C6) | 2–3 days | **Done (2026-09-12).** Closed the overseas-agent gap — a stated target audience with no path before this. (Trade-lane pages were also built here, then removed at the owner's request after a localhost review.) |
 | 7 | **Blog system + first article** | 1–2 weeks | **Blog plumbing + article #7 done (2026-09-12).** The main GEO engine — 1 of 10 scoped articles shipped so far |
 | 8 | **Real photos, testimonials, logos** (Part B) | owner | Conversion lift on traffic you'll have by then |
 | 9 | **Remaining 9 articles + Looker Studio + review cadence** | ongoing | Compounds |
@@ -446,8 +446,8 @@ Sequenced by dependency and by return, not by how interesting it is.
 | `npm install` | Once, first time |
 | `npm run dev` | Local preview at `http://localhost:4321`, live-reloading |
 | `npm run build` | Production build into `dist/` and `.vercel/output/` |
-| `npm test` | 278 unit + component tests |
-| `npm run test:build` | Builds, then runs 61 tests against the real built HTML |
+| `npm test` | 260 unit + component tests |
+| `npm run test:build` | Builds, then runs 60 tests against the real built HTML |
 | `npm run test:e2e` | 3 real-browser tests including the full quote flow |
 
 `npm run preview` does **not** work in this project — the Vercel adapter doesn't support it. To inspect the real build locally: `npm run build` then `npx serve dist/client`.
@@ -460,7 +460,6 @@ Sequenced by dependency and by return, not by how interesting it is.
 |---|---|
 | Any company fact — address, phone, email, hours, licenses, social, founded | [src/config/site.ts](../src/config/site.ts) |
 | Service page copy, bullets, FAQs | [src/data/services.ts](../src/data/services.ts) |
-| Trade-lane page copy (China, Vietnam) | [src/data/trade-lanes.ts](../src/data/trade-lanes.ts) |
 | Location page copy (JFK, New York) | [src/data/locations.ts](../src/data/locations.ts) |
 | Partner-audience page copy (overseas agents, brokers/3PLs) | [src/data/partners-audience.ts](../src/data/partners-audience.ts) |
 | Blog post content | [src/content/blog/](../src/content/blog/) |
@@ -485,7 +484,7 @@ Images: overwrite the file in `public/images/` keeping the same filename. Cachin
 | [docs/superpowers/specs/2026-08-09-global-gate-website-design.md](superpowers/specs/2026-08-09-global-gate-website-design.md) | Approved design spec — the 12 catalogued defects, locked decisions, design tokens, conversion design, SEO/GEO strategy, success criteria |
 | [docs/superpowers/plans/2026-08-09-global-gate-phase-1.md](superpowers/plans/2026-08-09-global-gate-phase-1.md) | The 20-task implementation plan. Ends with a **"Known deviations from the approved spec"** table — 6 entries, each a reversible judgment call |
 | `.superpowers/sdd/2026-08-09-global-gate-phase-1/progress.md` | Build ledger: every task, every defect found and fixed, and **20 deferred minor issues** worth triaging before merge |
-| `.superpowers/sdd/2026-09-11-shipping-locations-partners/final-fix-report.md` | The trade-lane/location/partner plan's build ledger and final whole-plan review — 5 findings, all fixed 2026-09-12 |
+| *(none — see below)* | The location/partner plan's build ledger lived at `.superpowers/sdd/2026-09-11-shipping-locations-partners/` during development; it was deleted per this project's standard workspace-cleanup step once its final whole-plan review came back clean (5 findings, all fixed, 2026-09-12). The durable record is this file (§1, §C6) plus the branch's own commit history. |
 | [README.md](../README.md) | Day-to-day maintenance guide, written for a non-technical reader |
 
 ### D. Known open items
@@ -496,7 +495,8 @@ Images: overwrite the file in `public/images/` keeping the same filename. Cachin
 
 ---
 
-*Phase 1 is complete and tested. Phase 2's trade-lane, location, and partner-audience
-pages — plus minimal blog plumbing and article #7 — are also complete and tested as of
-2026-09-12. The remaining 9 blog articles and all of Phase 3 (measurement) are still
-ahead.*
+*Phase 1 is complete and tested. Phase 2's location and partner-audience pages — plus
+minimal blog plumbing and article #7 — are also complete and tested as of 2026-09-12.
+(Trade-lane pages were built in the same pass, then removed at the owner's request after
+a localhost review.) The remaining 9 blog articles and all of Phase 3 (measurement) are
+still ahead.*

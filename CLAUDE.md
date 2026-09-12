@@ -6,11 +6,12 @@ Standing context for Claude Code sessions in this repository. Read before acting
 
 The Global Gate Logistics website (`global-gate.us`) — a freight forwarder in Queens, NY.
 Astro 7 static site + Tailwind 4, deployed on Vercel, quote emails via Resend.
-26 pages, 342 tests. **Phase 1 is complete, and so is the trade-lane/location/partner
-content build** (China & Vietnam lane pages, JFK & New York location pages, the
-agents/brokers partner pages, minimal blog plumbing, and 1 blog article). Still
-outstanding: 9 more blog articles and Phase 3 (GA4/measurement). The roadmap for what's
-left is [docs/HANDOFF.md](docs/HANDOFF.md) — read it before starting any substantial work.
+23 pages, 323 tests. **Phase 1 is complete, and so is the location/partner content
+build** (JFK & New York location pages, the agents/brokers partner pages, minimal blog
+plumbing, and 1 blog article). Trade-lane pages (China/Vietnam) were built and then
+removed at the owner's request — not part of the site. Still outstanding: 9 more blog
+articles and Phase 3 (GA4/measurement). The roadmap for what's left is
+[docs/HANDOFF.md](docs/HANDOFF.md) — read it before starting any substantial work.
 
 The site owner is **not a developer**. Explain trade-offs in plain language, recommend a
 specific option rather than presenting a menu, and never assume familiarity with the
@@ -50,8 +51,8 @@ Each has a test that fails the build if violated. Each exists for a concrete rea
 npm install          # once
 npm run dev          # local preview at http://localhost:4321
 npm run build        # production build
-npm test             # 278 unit + component tests
-npm run test:build   # builds, then 61 tests against the real built HTML
+npm test             # 260 unit + component tests
+npm run test:build   # builds, then 60 tests against the real built HTML
 npm run test:e2e     # 3 real-browser tests incl. the full quote flow
 ```
 
@@ -80,7 +81,6 @@ All three test commands must pass before any deploy.
 |---|---|
 | Any company fact (address, phone, hours, licenses, social, founded) | `src/config/site.ts` |
 | Service page copy, bullets, FAQs | `src/data/services.ts` |
-| Trade-lane page copy (China, Vietnam) | `src/data/trade-lanes.ts` |
 | Location page copy (JFK, New York) | `src/data/locations.ts` |
 | Partner-audience page copy (overseas agents, brokers/3PLs) | `src/data/partners-audience.ts` |
 | Blog post content | `src/content/blog/` |

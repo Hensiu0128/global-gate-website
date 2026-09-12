@@ -94,7 +94,6 @@ export const SITE: SiteConfig = {
 
 export const NAV_LINKS = [
   { href: '/services', label: 'Services' },
-  { href: '/shipping', label: 'Trade Lanes' },
   { href: '/blog', label: 'Blog' },
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
