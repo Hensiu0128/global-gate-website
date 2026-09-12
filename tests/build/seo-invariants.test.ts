@@ -30,6 +30,9 @@ describe('every built page', () => {
       'dist/client/services/customs-clearance/index.html',
       'dist/client/services/domestic-trucking/index.html',
       'dist/client/services/overseas-agent-network/index.html',
+      'dist/client/blog/index.html',
+      'dist/client/blog/choosing-a-us-freight-forwarding-partner/index.html',
+      'dist/client/partners/agents/index.html',
       'dist/client/privacy-policy/index.html', 'dist/client/terms/index.html', 'dist/client/404.html',
     ];
     for (const route of expected) expect(paths, `missing ${route}`).toContain(route);

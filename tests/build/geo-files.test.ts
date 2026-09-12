@@ -52,4 +52,21 @@ describe('llms.txt', () => {
   it('makes no claim of round-the-clock availability', () => {
     expect(llms).not.toContain('24/7');
   });
+
+  it('lists the blog', () => {
+    expect(llms).toContain('/blog');
+  });
+
+  it('lists the overseas-agent partner page', () => {
+    expect(llms).toContain('/partners/agents');
+  });
+
+  it('credits WCA membership', () => {
+    expect(llms).toContain('WCA member');
+  });
+
+  it('no longer frames the business as Asia-America exclusive', () => {
+    expect(llms).not.toContain('Asia-America');
+    expect(llms).not.toContain('Asia to America');
+  });
 });

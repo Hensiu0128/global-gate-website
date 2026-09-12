@@ -23,5 +23,8 @@ describe('sitemap-0.xml', () => {
     expect(sitemap).toContain('https://global-gate.us/contact</loc>');
     expect(sitemap).toContain('https://global-gate.us/privacy-policy</loc>');
     expect(sitemap).toContain('https://global-gate.us/terms</loc>');
+    expect(sitemap).toContain('https://global-gate.us/blog</loc>');
+    expect(sitemap).toContain('https://global-gate.us/blog/choosing-a-us-freight-forwarding-partner</loc>');
+    expect(sitemap).toContain('https://global-gate.us/partners/agents</loc>');
   });
 });

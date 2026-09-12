@@ -1,9 +1,10 @@
 # Global Gate Logistics
 
 > Global Gate Logistics Inc is a United States international freight forwarder,
-> licensed NVOCC, and IATA member based in Queens, New York, specializing in
-> Asia-America cargo routing. Ocean, air, customs clearance, warehousing, and
-> domestic trucking are handled in-house by one team.
+> licensed NVOCC, IATA member, and WCA member based in Queens, New York, moving
+> full container load and air cargo for any origin or destination. Ocean, air,
+> customs clearance, warehousing, and domestic trucking are handled in-house by
+> one team.
 
 ## Company facts
 
@@ -12,8 +13,8 @@
 - Phone: 631-596-5591 (main), 631-596-5592 (alternate)
 - Email: Op01@global-gate.us
 - Website: https://global-gate.us
-- Type: International freight forwarder, NVOCC, IATA member, C-TPAT certified
-- Specialization: Asia to America cargo routing
+- Type: International freight forwarder, NVOCC, IATA member, C-TPAT certified, WCA member
+- Specialization: Full container load (FCL) and air freight, any origin or destination
 - Service area: United States, nationwide
 - Quote turnaround: within 24 business hours
 - Availability: business hours
@@ -38,5 +39,7 @@
 - [Home](https://global-gate.us/)
 - [About](https://global-gate.us/about)
 - [All services](https://global-gate.us/services)
+- [Blog](https://global-gate.us/blog)
+- [Partner Program (Overseas Agents)](https://global-gate.us/partners/agents)
 - [Request a quote](https://global-gate.us/quote)
 - [Contact](https://global-gate.us/contact)
