@@ -73,7 +73,13 @@ export function websiteSchema() {
   };
 }
 
-export function serviceSchema(input: { name: string; description: string; url: string }) {
+export function serviceSchema(input: {
+  name: string;
+  description: string;
+  url: string;
+  areaServed?: { type: string; name: string };
+}) {
+  const area = input.areaServed ?? { type: 'Country', name: SITE.serviceArea };
   return {
     '@context': 'https://schema.org',
     '@type': 'Service',
@@ -82,7 +88,7 @@ export function serviceSchema(input: { name: string; description: string; url: s
     url: input.url,
     serviceType: input.name,
     provider: { '@type': 'Organization', name: SITE.name, url: SITE.url },
-    areaServed: { '@type': 'Country', name: SITE.serviceArea },
+    areaServed: { '@type': area.type, name: area.name },
   };
 }
 

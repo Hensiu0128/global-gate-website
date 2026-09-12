@@ -66,6 +66,25 @@ describe('serviceSchema', () => {
     expect(s.provider['@type']).toBe('Organization');
     expect(s.provider.name).toBe('Global Gate Logistics');
   });
+
+  it('defaults areaServed to the site-wide service area when not overridden', () => {
+    const s = serviceSchema({
+      name: 'Ocean Freight',
+      description: 'FCL and LCL ocean freight.',
+      url: 'https://global-gate.us/services/ocean-freight',
+    }) as Record<string, any>;
+    expect(s.areaServed).toEqual({ '@type': 'Country', name: 'United States' });
+  });
+
+  it('accepts a per-call areaServed override for trade-lane pages', () => {
+    const s = serviceSchema({
+      name: 'China to USA Ocean Freight',
+      description: 'Ocean freight from China.',
+      url: 'https://global-gate.us/shipping/china-to-usa',
+      areaServed: { type: 'Country', name: 'China' },
+    }) as Record<string, any>;
+    expect(s.areaServed).toEqual({ '@type': 'Country', name: 'China' });
+  });
 });
 
 describe('articleSchema', () => {
