@@ -92,9 +92,42 @@ within about an hour, rather than being cached for a year.
 | `QUOTE_FROM_EMAIL` | The verified sending address, e.g. `website@global-gate.us` |
 | `QUOTE_TO_EMAIL` | The address quote requests are delivered to |
 
-Deploying: once this repository is connected to Vercel, pushing to the `main`
-branch builds and publishes the site automatically. No manual deploy step is
-needed after that.
+Copy `.env.example` to `.env` for local development if you need the quote form
+to actually send email from your machine — `.env` is git-ignored and never
+committed. In production these three values are set directly in Vercel
+(Settings → Environment Variables), not in a file.
+
+## Deploying (GitHub + Vercel)
+
+This site is not deployed yet. Once it is, **pushing to the `main` branch
+builds and publishes automatically** — no manual deploy step after the initial
+setup below.
+
+1. **Create an empty GitHub repository** at [github.com/new](https://github.com/new).
+   Do **not** check "Add a README", "Add .gitignore", or "Choose a license" —
+   this project already has all of those; an initialized repo would conflict
+   with the code being pushed.
+2. **Push this code to it:**
+   ```bash
+   git remote add origin <the URL GitHub gives you>
+   git checkout main
+   git merge feat/website-rebuild
+   git push -u origin main
+   ```
+3. **Connect Vercel:** sign in at [vercel.com](https://vercel.com) with your
+   GitHub account, click **Add New → Project**, and import the repository you
+   just pushed. Vercel detects Astro automatically — accept the defaults.
+4. **Add the three environment variables above** under Vercel's
+   **Settings → Environment Variables** (apply each to Production, Preview,
+   and Development) before the first deploy.
+5. **Deploy.** You'll get a `*.vercel.app` URL — test the quote form there
+   first (confirm a real email arrives) before pointing the real domain at it
+   in Vercel's **Settings → Domains**.
+
+`npm test`, `npm run test:build`, and `npm run test:e2e` all pass as of this
+handover — see [docs/HANDOFF.md](docs/HANDOFF.md) for the full status and
+everything still outstanding (a few company facts, most of the planned blog
+articles, and analytics).
 
 ## A note on privacy and analytics
 

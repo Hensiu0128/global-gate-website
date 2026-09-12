@@ -92,12 +92,19 @@ You now have three values for step A3:
 
 The code currently exists on one laptop with no backup.
 
+1. Create an empty repository at [github.com/new](https://github.com/new). Do **not** initialize it with a README, `.gitignore`, or license — this project already has all three, and an initialized repo would conflict with the push below.
+2. Push this code to it:
+
 ```bash
-gh repo create global-gate-website --private --source=. --remote=origin
-git push -u origin feat/website-rebuild
+git remote add origin <the URL GitHub gives you>
+git checkout main
+git merge feat/website-rebuild
+git push -u origin main
 ```
 
-Then merge `feat/website-rebuild` into `main` — via a pull request if you want the diff reviewable, or directly. Vercel will deploy from `main`.
+(If the GitHub CLI (`gh`) is installed and authenticated, `gh repo create global-gate-website --private --source=. --remote=origin` does step 1 and adds the remote in one command — but it is not required; the plain `git` steps above work with nothing extra installed.)
+
+`main` already fast-forwards cleanly to `feat/website-rebuild` (confirmed 2026-09-12, 0 divergent commits), so the merge above is a simple fast-forward, not a real merge with conflicts to resolve. Vercel deploys from `main`.
 
 ### A3. Hosting (Vercel)
 
