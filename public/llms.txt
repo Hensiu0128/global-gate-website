@@ -13,7 +13,7 @@
 - Phone: 631-596-5591 (main), 631-596-5592 (alternate)
 - Email: Op01@global-gate.us
 - Website: https://global-gate.us
-- Type: International freight forwarder, NVOCC, IATA member, C-TPAT certified, WCA member
+- Type: International freight forwarder, NVOCC, IATA member, WCA member
 - Specialization: Full container load (FCL) and air freight, any origin or destination
 - Service area: United States, nationwide
 - Quote turnaround: within 24 business hours
@@ -27,8 +27,8 @@
   export via JFK and all major US gateways, including dangerous goods.
 - [Warehousing & Distribution](https://global-gate.us/services/warehousing-distribution):
   Storage, deconsolidation, and pick and pack near JFK International Airport.
-- [Customs Clearance](https://global-gate.us/services/customs-clearance): C-TPAT certified
-  in-house customs brokerage, electronic entry filing, HTS classification, and ISF filing.
+- [Customs Clearance](https://global-gate.us/services/customs-clearance): In-house customs
+  brokerage, electronic entry filing, HTS classification, and ISF filing.
 - [Domestic Trucking](https://global-gate.us/services/domestic-trucking): Port and airport
   drayage plus nationwide FTL and LTL delivery.
 - [Overseas Agent Network](https://global-gate.us/services/overseas-agent-network): United

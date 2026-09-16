@@ -22,7 +22,7 @@ export const PARTNER_AUDIENCES: PartnerAudience[] = [
     bullets: [
       'WCA member — an independent, verifiable network credential',
       'Licensed NVOCC and IATA member, quoting from direct carrier contracts',
-      'C-TPAT certified customs operations, filed in-house',
+      'Customs operations filed in-house, not subcontracted',
       'Rate requests answered within 24 business hours',
       'Warehousing and drayage minutes from JFK and the Port of NY/NJ',
     ],
@@ -66,7 +66,7 @@ export const PARTNER_AUDIENCES: PartnerAudience[] = [
       'Warehousing and deconsolidation minutes from JFK and the Port of NY/NJ',
       'Nationwide FTL and LTL delivery with appointment scheduling',
       'Rate requests answered within 24 business hours',
-      'C-TPAT certified operations, filed and dispatched by one team',
+      'Customs operations filed and dispatched by one team',
     ],
     faqs: [
       {

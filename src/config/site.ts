@@ -78,7 +78,7 @@ export const SITE: SiteConfig = {
   credentials: {
     fmcNumber: null,
     iataNumber: null,
-    ctpatCertified: true,
+    ctpatCertified: false,
     nvocc: true,
     wcaMember: true,
   },

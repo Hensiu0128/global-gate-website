@@ -11,10 +11,14 @@ async function render(C: any) {
 }
 
 describe('TrustBar', () => {
-  it('states the NVOCC and C-TPAT credentials the business confirmed it holds', async () => {
+  it('states the NVOCC credential the business confirmed it holds', async () => {
     const html = await render(TrustBar);
     expect(html).toContain('NVOCC');
-    expect(html).toContain('C-TPAT');
+  });
+
+  it('omits C-TPAT entirely — the business confirmed it is not certified', async () => {
+    const html = await render(TrustBar);
+    expect(html).not.toContain('C-TPAT');
   });
 
   it('omits FMC entirely while the license number is unknown', async () => {
@@ -28,9 +32,9 @@ describe('TrustBar', () => {
     const html = await render(TrustBar);
     expect(html).toContain('Licensed NVOCC');
     expect(html).toContain('IATA Member');
-    expect(html).toContain('C-TPAT Certified');
-    // Exactly three — an extra or empty <li> is a filtering bug.
-    expect(html.match(/<li[\s>]/g) ?? []).toHaveLength(3);
+    expect(html).not.toContain('C-TPAT');
+    // Exactly two — an extra or empty <li> is a filtering bug.
+    expect(html.match(/<li[\s>]/g) ?? []).toHaveLength(2);
   });
 });
 

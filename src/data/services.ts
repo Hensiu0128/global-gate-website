@@ -157,9 +157,9 @@ export const SERVICES: Service[] = [
     cardCopy:
       'Expert customs brokerage ensuring smooth, compliant clearance through U.S. and international customs.',
     heroCopy:
-      'Customs clearance is handled in-house rather than subcontracted, which means the team booking your freight is the team filing your entry. Global Gate Logistics is C-TPAT certified and files entries electronically with U.S. Customs and Border Protection.',
+      'Customs clearance is handled in-house rather than subcontracted, which means the team booking your freight is the team filing your entry. Entries are filed electronically with U.S. Customs and Border Protection.',
     bullets: [
-      'C-TPAT certified customs operations',
+      'In-house customs operations, not subcontracted',
       'Electronic entry filing with U.S. CBP',
       'HTS classification and duty estimation',
       'ISF (10+2) filing for ocean imports',
@@ -190,7 +190,7 @@ export const SERVICES: Service[] = [
     image: null,
     metaTitle: 'US Customs Clearance & Brokerage',
     metaDescription:
-      'C-TPAT certified customs brokerage with in-house entry filing, HTS classification, ISF filing, and FDA and USDA submissions. Clear US customs, handoff-free.',
+      'In-house customs brokerage: entry filing, HTS classification, ISF filing, and FDA and USDA submissions. Clear US customs, handoff-free.',
   },
   {
     slug: 'domestic-trucking',

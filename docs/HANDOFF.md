@@ -162,7 +162,7 @@ All values live in [src/config/site.ts](../src/config/site.ts) unless noted.
 >
 > The FMC publishes a **public licensee database**. When you publish your license number, an AI engine (or a cautious importer) can cross-reference it against `fmc.gov` and confirm the company is real and licensed. Most competitors publish nothing. This converts *"we are a licensed NVOCC"* — an unverifiable marketing claim that no AI model will repeat with confidence — into a **checkable fact**, which is precisely the kind of thing these models cite.
 >
-> **One exception: do not publish the C-TPAT SVI number.** That identifier is intended for sharing with specific business partners, not for public posting. Publish the *status* ("C-TPAT certified"), which the site already does.
+> **One exception, if C-TPAT certification is ever obtained: do not publish the SVI number.** That identifier is intended for sharing with specific business partners, not for public posting — publish only the certification *status*. As of 2026-09-15, the owner confirmed the business is **not** C-TPAT certified; every earlier mention of it across the site (`src/config/site.ts`'s `ctpatCertified` flag, service/location/partner page copy, and `llms.txt`) was a false claim and has been corrected. Do not re-add "C-TPAT" anywhere until the owner confirms real certification.
 
 ---
 

@@ -20,7 +20,7 @@ export const LOCATIONS: LocationPage[] = [
     tagline: 'Air & Ocean Cargo Near JFK',
     heroCopy: `Global Gate Logistics operates from ${SITE.address.street}, ${SITE.address.city}, ${SITE.address.region} ${SITE.address.postalCode} — minutes from JFK International Airport. Air cargo arriving at JFK is cleared, warehoused, and dispatched by one in-house team.`,
     bullets: [
-      'C-TPAT certified customs clearance for air cargo arriving at JFK',
+      'In-house customs clearance for air cargo arriving at JFK',
       'Warehousing and deconsolidation minutes from the airport',
       'Drayage and final-mile delivery dispatched from the same facility',
       'Ocean cargo arriving at the Port of NY/NJ handled by the same team',
@@ -62,7 +62,7 @@ export const LOCATIONS: LocationPage[] = [
     heroCopy: `Global Gate Logistics is based in ${SITE.address.city}, ${SITE.address.region}, within reach of both the Port of New York and New Jersey and JFK International Airport. Importers and exporters across the New York metro area are served from the same in-house facility.`,
     bullets: [
       'Ocean cargo through the Port of New York and New Jersey, handled in-house end to end',
-      'C-TPAT certified customs clearance and HTS classification',
+      'In-house customs clearance and HTS classification',
       'Warehousing, deconsolidation, and pick/pack at the Queens facility',
       'Nationwide trucking dispatched directly from New York',
     ],
